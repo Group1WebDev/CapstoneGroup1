@@ -1,0 +1,82 @@
+.LoginBg {
+  background-image: url(../../images/loginBackGr.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 152px;
+  padding-bottom: 50px;
+  margin-top: 86px;
+}
+
+.err_input {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.LoginBox {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+.LoginBox::before {
+  content: '';
+  /* background-image: url(../../images/loginBackGr.png); */
+  background-size: 50%;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 66%;
+  left: 362px;
+  width: 100%;
+  height: 217px;
+  z-index: -999;
+}
+
+.LoginBox h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.LoginBox form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input_login {
+  margin-bottom: 28px;
+}
+
+.input_login label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.input_login input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.LoginBox button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  margin: 8px 0;
+}
+
+.LoginBox button:hover {
+  background-color: var(--primaryDark-color);
+}
