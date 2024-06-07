@@ -1,0 +1,214 @@
+.search_bar {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px 20px 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: auto;
+}
+
+.search_field {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin-right: 10px;
+}
+
+.search_field .icon {
+    margin-right: 10px;
+    color: #555;
+}
+
+.search_field input,
+.search_field select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+.search_field input::placeholder {
+    color: #aaa;
+}
+
+.search_button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.search_button:hover {
+    background-color: var(--primaryDark-color);
+}
+
+.searchBg {
+    padding: 80px 0;
+    background: #e8eeff;
+}
+
+.jobListPage {
+    padding-top: 70px;
+}
+
+
+/* filter section css */
+.content_area {
+    padding: 50px 0;
+}
+
+.content_area .container {
+    display: flex;
+    flex-direction: row;
+    gap: 70px;
+}
+
+.filter_area {
+    width: 300px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.filter_area h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.filter_area .filter_field,
+.filter_area .job-type,
+.filter_area .date-posted,
+.filter_area .experience-level,
+.filter_area .salarySlider {
+    margin-bottom: 40px;
+}
+
+.filter_area .filter_field select,
+.filter_area .job-type label,
+.filter_area .date-posted label,
+.filter_area .experience-level label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.filter_area .filter_field select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.filter_area .job-type input,
+.filter_area .date-posted input,
+.filter_area .experience-level input {
+    margin-right: 10px;
+}
+
+.areaSlider,
+.salarySlider {
+    margin-bottom: 20px;
+}
+
+.areaSlider label,
+.salarySlider label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.areaSlider input,
+.salarySlider input {
+    width: 100%;
+}
+
+.areaSlider div,
+.salarySlider div {
+    text-align: center;
+    margin-top: 20px;
+    background-color: #e9ecef;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.filter_area button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.filter_area button:hover {
+    background-color: var(--primaryDark-color);
+}
+
+.job_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: calc(100% - 340px);
+    height: 100%;
+}
+
+.job_card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+.job_card  .img_logo{
+    width: 100px;
+    margin-bottom: 16px;
+}
+.job_card  .img_logo img{
+    width: 100%;
+}
+.job_card_header {
+    display: flex;
+    flex-direction: column;
+}
+.job_info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.job_info h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.job_info p {
+    margin: 0;
+    color: #666;
+}
+
+.job_type {
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.job_card_body h4 {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.job_card_body p {
+    margin: 0;
+    color: #666;
+}
