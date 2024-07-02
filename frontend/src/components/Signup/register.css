@@ -1,0 +1,52 @@
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+.tab.active {
+  background: var(--primary-color);
+  color: white;
+}
+.registerHead span {
+  color: var(--secondary-color);
+}
+.noaccount {
+  text-align: center;
+  margin-top: 20px;
+  color: #676767;
+}
+.noaccount a {
+  margin-left: 10px;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+.noaccount a:hover {
+  color: var(--primaryDark-color);
+}
+.err_input {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.registerPage .LoginBox::before {
+  content: '';
+  background-image: url(../../images/loginBackGr.png);
+  background-size: 50%;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 80%;
+  left: 362px;
+  width: 100%;
+  height: 217px;
+  z-index: -999;
+  margin-top: 86px;
+}

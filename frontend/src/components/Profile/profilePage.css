@@ -1,0 +1,50 @@
+.profilePage.userProfile {
+    margin-top: 70px;
+    padding: 0;
+}
+
+.profilePage.userProfile .banner_section {
+    background-image: url(../../images/jobBanner.jpg);
+    /*Image link:  https://unsplash.com/photos/person-typing-on-apple-cordless-keyboard-RYyr-k3Ysqg */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 400px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: white;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: linear-gradient(to bottom right, #727272, #4654c7);
+        opacity: .8;
+    }
+
+    &:after {
+        content: 'User Profile';
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0.99;
+        font-weight: bold;
+    }
+}
+.profilePage.userProfile .container{
+    margin-top: 100px;
+}
+.profilePage.userProfile .oneline_input:last-child{
+    margin-bottom: 0px;
+}
+.profilePage.userProfile .update_button{
+    margin-top: 0px;
+    margin-bottom: 40px;
+}
