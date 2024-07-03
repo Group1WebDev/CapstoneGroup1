@@ -11,6 +11,7 @@ import EmployeeDash from './components/Employer/EmployerDashboard/employeeDash';
 import AddNewJob from './components/Employer/Add_job/addJob';
 import ContactUs from './components/ContactUs/contactUs';
 import EmployerParent from './components/Employer/mainLayout';
+import JobDescription from './components/JobDescription/jobDescription'
 
 import './App.css';
 import'./responsive.css';
@@ -133,6 +134,14 @@ function RouteMain() {
           element={
             <Layout>
               <ProfilePage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/jobDescription'
+          element={
+            <Layout>
+              <JobDescription />
             </Layout>
           }
         />
