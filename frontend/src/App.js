@@ -13,11 +13,13 @@ import ContactUs from './components/ContactUs/contactUs';
 import EmployerParent from './components/Employer/mainLayout';
 
 import './App.css';
+import'./responsive.css';
 
 import { AuthProvider, useAuth } from './useToken';
 import EmployerProfile from './components/Employer/EmployerProfile/employerProfile';
 import ProfilePage from './components/Profile/profilePage';
 import ForgotPasswordScreen from './components/ForgotPassword/forgotPassword';
+import JobDescription from './components/JobDescription/jobDescription.jsx';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -135,26 +137,23 @@ function RouteMain() {
             </Layout>
           }
         />
-        {/* <Route
-          path='employer/dashboard'
+        <Route
+          path='/jobDescription'
           element={
             <Layout>
-              <EmployeeDash />
+              <JobDescription />
             </Layout>
           }
         />
-        <Route
-          path='employer/addJob'
-          element={
-            <Layout>
-              <AddNewJob />
-            </Layout>
-          }
-        /> */}
+
+
+
+
 
 
 
         {/* Employee Portal Routes */}
+
         <Route
           path='/employer/dashboard'
           element={

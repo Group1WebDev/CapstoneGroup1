@@ -58,7 +58,7 @@ const Signup = () => {
 
     if (validate.success) {
       try {
-        const result = await fetch('http://localhost:5000/userRegister', {
+        const result = await fetch('http://localhost:5001/userRegister', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -66,6 +66,7 @@ const Signup = () => {
             password: password,
             firstname: firstName,
             lastname: lastName,
+            role: selectedRole,
           }),
         });
         if (result.ok) {
@@ -100,6 +101,12 @@ const Signup = () => {
     }
   };
 
+  const [selectedRole, setSelectedRole] = useState('');
+
+  const handleRadioChange = (event) => {
+    setSelectedRole(event.target.value);
+  };
+
   return (
     <div className='LoginBg registerPage'>
       <div className='LoginBox'>
@@ -107,6 +114,32 @@ const Signup = () => {
           <h2 className='registerHead'>
             Register as <span>User</span>
           </h2>
+          <div>
+            <span>
+              Select your Role
+            </span>
+            <div className='userRadio'>
+              <label htmlFor="employer_role">Employer</label>
+              <input
+                type='radio'
+                name='userRole'
+                id='employer_role'
+                value='employer'
+                checked={selectedRole === 'employer'}
+                onChange={handleRadioChange} 
+                />
+              <label htmlFor="user_role">User</label>
+              <input
+                type="radio"
+                name='userRole'
+                id='user_role'
+                value='user'
+                checked={selectedRole === 'user'}
+                onChange={handleRadioChange} 
+                />
+            </div>
+          </div>
+
           <form onSubmit={submitHandler}>
             <div className='input_login'>
               <label htmlFor='firstName'>First Name:</label>

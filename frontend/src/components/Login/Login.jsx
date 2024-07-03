@@ -41,7 +41,7 @@ const Login = () => {
     const validate = loginSchema.safeParse({ email, password });
     if (validate.success) {
       try {
-        const result = await fetch('http://localhost:5000/login', {
+        const result = await fetch('http://localhost:5001/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
