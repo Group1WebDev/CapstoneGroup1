@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
@@ -13,15 +13,21 @@ import ContactUs from './components/ContactUs/contactUs';
 import EmployerParent from './components/Employer/mainLayout';
 
 import './App.css';
-import'./responsive.css';
+import './responsive.css';
 
 import { AuthProvider, useAuth } from './useToken';
 import EmployerProfile from './components/Employer/EmployerProfile/employerProfile';
 import ProfilePage from './components/Profile/profilePage';
 import ForgotPasswordScreen from './components/ForgotPassword/forgotPassword';
+import JobDescription from './components/JobDescription/jobDescription.jsx';
+import EmployerLayout from './EmployerLayout.jsx';
 
 const Layout = ({ children }) => {
   const location = useLocation();
+  const { userInfo } = useAuth();
+  const noHeadFooter = ['/login', '/signup', '/forgotPassword'].includes(location.pathname);
+  const hideEmployerFooter = userInfo?.role === 'employer';
+
   useEffect(() => {
     const body = document.querySelector('#root');
     body.scrollIntoView(
@@ -34,29 +40,12 @@ const Layout = ({ children }) => {
 
   return (
     <section>
-      <Nav />
+      {!noHeadFooter && <Nav />}
       {children}
-      {!location.pathname.includes('employer') && <Footer />}
+      {!noHeadFooter && !hideEmployerFooter && <Footer />}
     </section>
   );
 };
-
-// TODO:
-// const AdminLayout = ({ children }) => {
-//   const { token, userInfo } = useAuth();
-
-//   useEffect(() => {
-//     if (!token || !userInfo || !userInfo.userType) {
-//       return (window.location.href = '/login');
-//     }
-//   }, [token, userInfo]);
-
-//   return (
-//     <div>
-//       <div className='content-padder content-background'>{children}</div>
-//     </div>
-//   );
-// };
 
 function Home() {
   return (
@@ -69,6 +58,7 @@ function Home() {
 }
 
 function RouteMain() {
+
   return (
     <div>
       <Routes>
@@ -105,7 +95,7 @@ function RouteMain() {
           }
         />
         <Route
-          path='/job-list'
+          path='/jobList'
           element={
             <Layout>
               <JobList />
@@ -136,6 +126,14 @@ function RouteMain() {
             </Layout>
           }
         />
+        <Route
+          path='/jobDescription'
+          element={
+            <Layout>
+              <JobDescription />
+            </Layout>
+          }
+        />
 
 
 
@@ -148,25 +146,31 @@ function RouteMain() {
         <Route
           path='/employer/dashboard'
           element={
-            <EmployerParent>
-              <EmployeeDash />
-            </EmployerParent>
+            <EmployerLayout>
+              <EmployerParent>
+                <EmployeeDash />
+              </EmployerParent>
+            </EmployerLayout>
           }
         />
         <Route
           path='/employer/addJob'
           element={
-            <EmployerParent>
-              <AddNewJob />
-            </EmployerParent>
+            <EmployerLayout>
+              <EmployerParent>
+                <AddNewJob />
+              </EmployerParent>
+            </EmployerLayout>
           }
         />
         <Route
           path='/employer/Profile'
           element={
-            <EmployerParent>
-              <EmployerProfile />
-            </EmployerParent>
+            <EmployerLayout>
+              <EmployerParent>
+                <EmployerProfile />
+              </EmployerParent>
+            </EmployerLayout>
           }
         />
       </Routes>

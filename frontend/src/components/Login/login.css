@@ -94,3 +94,15 @@
 .loggin_oneLine span:hover{
   color: var(--primary-color);
 }
+.input_eye{
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.input_eye .fontIcon{
+  padding: 10px;
+  border-radius: 5px;
+  position: absolute;
+  right: 0px;
+  cursor: pointer;
+}
