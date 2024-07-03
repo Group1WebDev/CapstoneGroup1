@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import EmployerSidebar from '../sidebar'
 import MultiRangeSlider from "multi-range-slider-react";
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
@@ -8,11 +8,19 @@ function AddNewJob(sidebarCollapse, sidebarHandler) {
   // function to handle salary slider
   const [minSalary, set_minSalary] = useState(25);
   const [maxSalary, set_maxSalary] = useState(75);
+  const [locationSelected, setLocationSelected] = useState(null);
+  const [exactLocation, setExactLocation] = useState({
+    addressLine1:'',
+    city: '',
+    province: '',
+    country: ''
+  })
+
   const handleSliderInput = (e) => {
     set_minSalary(e.minValue);
     set_maxSalary(e.maxValue);
   };
-  console.log(minSalary, maxSalary, 'salary tracker')
+  // console.log(minSalary, maxSalary, 'salary tracker')
 
   // function to handle multiple checkbox for language
   const [languageSelected, setlanguageSelected] = useState([]);
@@ -25,7 +33,31 @@ function AddNewJob(sidebarCollapse, sidebarHandler) {
       setlanguageSelected(languageSelected.filter((lang) => lang !== value));
     }
   };
-  console.log(languageSelected, 'sdelefvcdscv')
+  // console.log(languageSelected, 'language_selected')
+
+  useEffect(() => {
+    if (locationSelected && locationSelected.value && locationSelected.value.terms) {
+      console.log('locValues',locationSelected.value.terms)
+      const locationValues = locationSelected.value.terms;
+      if (locationValues.length === 4) {
+        setExactLocation({
+          addressLine1: '',
+          city: locationValues[0] ? locationValues[0].value : '',
+          province: locationValues[1] ? locationValues[1].value : '',
+          country: locationValues[2] ? locationValues[2].value : ''
+        });
+      } else if (locationValues.length === 5) {
+        setExactLocation({
+          addressLine1: `${locationValues[0] ? locationValues[0].value : ''} ${locationValues[1] ? locationValues[1].value : ''}`,
+          city: locationValues[2] ? locationValues[2].value : '',
+          province: locationValues[3] ? locationValues[3].value : '',
+          country: locationValues[4] ? locationValues[4].value : ''
+        });
+      }
+    }
+  }, [locationSelected])
+  console.log('exactJOBLOcation', exactLocation.city, exactLocation.province, exactLocation.country)
+
 
   return (
     <>
@@ -151,21 +183,35 @@ function AddNewJob(sidebarCollapse, sidebarHandler) {
 
           <h2>Job Location Details</h2>
           <div className='input_parent'>
-              <label className='google_autocomplete'>Search a location</label>
-              <GooglePlacesAutocomplete />
-            </div>
+            <label className='google_autocomplete'>Search a location</label>
+            <GooglePlacesAutocomplete
+              selectProps={{
+                value: locationSelected,
+                onChange: setLocationSelected,
+              }}
+              autocompletionRequest={{
+                componentRestrictions: {
+                  country: ['us', 'ca'],
+                }
+              }}
+            />
+          </div>
           <div className='oneline_input'>
+          <div className='input_parent'>
+              <label>Address Line</label>
+              <input type="text" value={exactLocation.addressLine1} readOnly />
+            </div>
             <div className='input_parent'>
               <label>City</label>
-              <input type="text" />
+              <input type="text" value={exactLocation.city} readOnly />
             </div>
             <div className='input_parent'>
               <label>Provience</label>
-              <input type="text" />
+              <input type="text" value={exactLocation.province} readOnly />
             </div>
             <div className='input_parent'>
               <label>Country</label>
-              <input type="text" value='Canada' disabled/>
+              <input type="text" value={exactLocation.country} readOnly />
             </div>
           </div>
           <div className='submit_btn'>
