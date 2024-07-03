@@ -19,7 +19,6 @@ import { AuthProvider, useAuth } from './useToken';
 import EmployerProfile from './components/Employer/EmployerProfile/employerProfile';
 import ProfilePage from './components/Profile/profilePage';
 import ForgotPasswordScreen from './components/ForgotPassword/forgotPassword';
-import JobDescription from './components/JobDescription/jobDescription.jsx';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -134,14 +133,6 @@ function RouteMain() {
           element={
             <Layout>
               <ProfilePage />
-            </Layout>
-          }
-        />
-        <Route
-          path='/jobDescription'
-          element={
-            <Layout>
-              <JobDescription />
             </Layout>
           }
         />
