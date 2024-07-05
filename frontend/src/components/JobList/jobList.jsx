@@ -1,34 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './jobList.css';
-import Header from '../Header/Header';
-import Footer from '../Footer/footer';
-import company1Logo from '../../images/dummyLogo1.jpg';
-import company2Logo from '../../images/dummyLogo2.jpeg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faMapMarkerAlt, faBriefcase, faClock } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faMapMarkerAlt, faBriefcase, faClock, faDollarSign, faFlag, faLanguage, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 export default function Jobs() {
   const [radius, setRadius] = useState(100);
   const [salary, setSalary] = useState(50000);
+  const [jobsListing, setJobsListing] = useState([]);
 
-  const jobsListing = [
-    {
-      company: 'Company 1',
-      title: 'Web Designer / Developer',
-      location: 'Australia',
-      time: '2 days ago',
-      type: 'Full Time',
-      logo: company1Logo,
-    },
-    {
-      company: 'Company 2',
-      title: 'Marketing Director',
-      location: 'Russia',
-      time: '5 days ago',
-      type: 'Part Time',
-      logo: company2Logo,
-    },
-  ];
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/jobs');
+        if (!response.ok) {
+          throw new Error(`err ${response.status}`);
+        }
+        const data = await response.json();
+        setJobsListing(data);
+      } catch (error) {
+        console.error('err fetching job:', error);
+      }
+    };
+
+    fetchJobs();
+  }, []);
 
   return (
     <>
@@ -50,6 +46,9 @@ export default function Jobs() {
                   <option value=''>Choose a category</option>
                   <option value='tech'>Tech</option>
                   <option value='finance'>Finance</option>
+                  <option value='marketing'>Marketing</option>
+                  <option value='food'>Food</option>
+                  <option value='construction'>Construction</option>
                 </select>
               </div>
               <button className='search_button'>Find Jobs</button>
@@ -158,26 +157,32 @@ export default function Jobs() {
 
             <div className='job_grid'>
               {jobsListing.map((job, index) => (
-                <div key={index} className='job_card'>
-                  <div className='job_card_header'>
-                    <div className='img_logo'>
-                      <img src={job.logo} alt={`${job.company} logo`} className='job_logo' />
+                <Link to={'/jobDescription/' + job._id}>
+                  <div key={index} className='job_card'>
+                    <div className='job_card_header'>
+                      <div className='job_info'>
+                        <h3>{job.jobTitle}</h3>
+                        <span className='job_type'>{job.jobType}</span>
+                      </div>
                     </div>
-                    <div className='job_info'>
-                      <h3>{job.company}</h3>
-                      <span className='job_type'>{job.type}</span>
+                    <div className='job_card_body'>
+                      <h4>{job.company}</h4>
+                      <p>
+                        <FontAwesomeIcon icon={faMapMarkerAlt} /> {job.province}, {job.country}
+                      </p>
+                      <p>
+                        <FontAwesomeIcon icon={faBriefcase} /> {job.jobCategory} - {job.experienceLevel}
+                      </p>
+                      <p>{job.jobDescription}</p>
+                      <p>
+                        ${job.minSalary.toLocaleString()} - ${job.maxSalary.toLocaleString()} per annum
+                      </p>
+                      <p>
+                        <FontAwesomeIcon icon={faLanguage} /> {job.languageRequirement.join(', ')}
+                      </p>
                     </div>
-                    <p>
-                      <FontAwesomeIcon icon={faClock} /> {job.time}
-                    </p>
                   </div>
-                  <div className='job_card_body'>
-                    <h4>{job.title}</h4>
-                    <p>
-                      <FontAwesomeIcon icon={faMapMarkerAlt} /> {job.location}
-                    </p>
-                  </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
