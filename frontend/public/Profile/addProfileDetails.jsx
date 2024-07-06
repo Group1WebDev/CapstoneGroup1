@@ -21,58 +21,58 @@ export const AddProfileDetails = () => {
         }
     }, [userLocation])
 
-    // return (
-    //     <>
-    //         <section className='addProfileParent'>
-    //             <div className="container">
-    //                 <h1 className='p_heading'>Add Your Profile Information</h1>
-    //                 <div className='flex_pContainer'>
-    //                     <form action="" className=''>
-    //                         <div className="form_groupArea">
-    //                             <div className='input_div'>
-    //                                 <label htmlFor="p_title">Your Designation:</label>
-    //                                 <input type="text" id='p_title' />
-    //                             </div>
-    //                             <div className='input_div'>
-    //                                 <label htmlFor="p_skills">Skills:</label>
-    //                                 <TagsInput
-    //                                     value={skillSelected}
-    //                                     onChange={setSkillSelected}
-    //                                     name="skills"
-    //                                     placeHolder="Enter skill and press enter"
-    //                                 />
-    //                             </div>
-    //                             <div className='input_div'>
-    //                                 <label htmlFor="">Location Detail:</label>
-    //                                 <GooglePlacesAutocomplete
-    //                                     selectProps={{
-    //                                         value: userLocation,
-    //                                         onChange: setUserLocation,
-    //                                     }}
-    //                                     autocompletionRequest={{
-    //                                         componentRestrictions: {
-    //                                             country: ['us', 'ca'],
-    //                                         }
-    //                                     }}
-    //                                 />
-    //                                 <div className='input_parent'>
-    //                                     <label htmlFor="">Your Location:</label>
-    //                                     <span>{updatedAddress.addressLine}</span>
-    //                                 </div>
-    //                             </div>
-    //                             <div className='input_div'>
-    //                                 <label htmlFor="p_bio">Your Bio:</label>
-    //                                 <textarea name="p_bio" id="p_bio"></textarea>
-    //                             </div>
-    //                             <div className='input_div'>
-    //                                 <label htmlFor="p_select">Your Gender:</label>
-    //                                 <select name="" id="">
-    //                                     <option value="" disabled>Select Gender</option>
-    //                                     <option value="Male">Male</option>
-    //                                     <option value="Female">Female</option>
-    //                                     <option value="Other">Other</option>
-    //                                 </select>
-    //                             </div>
+    return (
+        <>
+            <section className='addProfileParent'>
+                <div className="container">
+                    <h1 className='p_heading'>Add Your Profile Information</h1>
+                    <div className='flex_pContainer'>
+                        <form action="" className=''>
+                            <div className="form_groupArea">
+                                <div className='input_div'>
+                                    <label htmlFor="p_title">Your Designation:</label>
+                                    <input type="text" id='p_title' />
+                                </div>
+                                <div className='input_div'>
+                                    <label htmlFor="p_skills">Skills:</label>
+                                    <TagsInput
+                                        value={skillSelected}
+                                        onChange={setSkillSelected}
+                                        name="skills"
+                                        placeHolder="Enter skill and press enter"
+                                    />
+                                </div>
+                                <div className='input_div'>
+                                    <label htmlFor="">Location Detail:</label>
+                                    <GooglePlacesAutocomplete
+                                        selectProps={{
+                                            value: userLocation,
+                                            onChange: setUserLocation,
+                                        }}
+                                        autocompletionRequest={{
+                                            componentRestrictions: {
+                                                country: ['us', 'ca'],
+                                            }
+                                        }}
+                                    />
+                                    <div className='input_parent'>
+                                        <label htmlFor="">Your Location:</label>
+                                        <span>{updatedAddress.addressLine}</span>
+                                    </div>
+                                </div>
+                                <div className='input_div'>
+                                    <label htmlFor="p_bio">Your Bio:</label>
+                                    <textarea name="p_bio" id="p_bio"></textarea>
+                                </div>
+                                <div className='input_div'>
+                                    <label htmlFor="p_select">Your Gender:</label>
+                                    <select name="" id="">
+                                        <option value="" disabled>Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
 
                                 <div className='user_education'>
                                     <h1>Education Details</h1>
