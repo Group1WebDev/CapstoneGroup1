@@ -464,4 +464,20 @@ button.cancel_button {
 }
 
 
+
+
+/* ---- JOBS LISTED PAGE ---- */
+.view_allBtn{
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--secondary-color);
+    color: #fff;
+    cursor: pointer;
+}
+.view_allBtn:hover{
+    background-color: var(--secondaryDark-color);
+}
+
+
 @media (max-width: 1200px) {}

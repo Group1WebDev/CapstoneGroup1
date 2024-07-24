@@ -19,7 +19,7 @@ function EmployerSidebar({ sidebarCollapse, sidebarHandler }) {
             <div className='sidebar_icon'><FontAwesomeIcon icon={faList} /></div>
             <span>Dashboard</span>
           </NavLink></li>
-        <li><NavLink exact activeclassname='is-active' to='/employer/jobPosting'>
+        <li><NavLink exact activeclassname='is-active' to='/employer/JobsPosted'>
           <div className='sidebar_icon'><FontAwesomeIcon icon={faMagnifyingGlass} /></div>
           <span>Job Postings</span>
         </NavLink></li>

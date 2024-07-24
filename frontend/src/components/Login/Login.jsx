@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import './login.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../useToken';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const loginSchema = z.object({
   email: z.string({ required_error: 'Email cannot be empty' }).email({ message: 'Please enter valid email address' }),
@@ -20,6 +22,12 @@ const Login = () => {
 
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  const [passVisible, setPassVisible] = useState(false);
+
+  const togglePassVisibile = () => {
+    setPassVisible(!passVisible);
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,11 +64,11 @@ const Login = () => {
             user: resultJson.user,
           };
           setToken(userInfo);
-
-          if (resultJson.user.userType) {
-            window.location = '/admin/';
+          window.sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+          if (resultJson.user.role === 'employer') {
+            navigate('/employer/dashboard')
           } else {
-            navigate(`/`);
+            navigate(`/jobList`);
           }
         } else {
           alert('Login failed!');
@@ -84,9 +92,14 @@ const Login = () => {
     }
   };
 
-  const gotoForgotScreen =()=> {
+  const gotoForgotScreen = () => {
+    if (email) {
+      window.sessionStorage.setItem('loginEmail', email);
+    }
     navigate(`/forgotPassword`);
-  }
+  };
+
+
   return (
     <div>
       <div className='LoginBg'>
@@ -100,7 +113,22 @@ const Login = () => {
             </div>
             <div className='input_login'>
               <label htmlFor='password'>Password:</label>
-              <input type='password' id='password' name='password' onChange={handleChange} value={password} />
+              <div className='input_eye'>
+                <input
+                  type={passVisible ? "text" : "password"}
+                  className=''
+                  id='password'
+                  name='password'
+                  onChange={handleChange}
+                  value={password}
+                />
+                <FontAwesomeIcon
+                  icon={passVisible ? faEyeSlash : faEye}
+                  onClick={togglePassVisibile}
+                  className='fontIcon'
+                />
+              </div>
+              {/* <input type='password' id='password' name='password' onChange={handleChange} value={password} /> */}
               <div className='err_input'>{passwordError}</div>
             </div>
             <div className='loggin_oneLine'>

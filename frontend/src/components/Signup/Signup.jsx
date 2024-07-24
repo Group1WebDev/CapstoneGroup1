@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { z } from 'zod';
 import './register.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const signupSchema = z.object({
   email: z.string({ required_error: 'Email cannot be empty' }).email({ message: 'Please enter a valid email address' }),
@@ -21,6 +23,13 @@ const Signup = () => {
   const [passwordError, setPasswordError] = useState('');
 
   const navigate = useNavigate();
+
+  const [signupPassVisible, setSignupPassVisible] = useState(false);
+
+  const toggleSignupPassVisibile = () => {
+    setSignupPassVisible(!signupPassVisible);
+  }
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -115,8 +124,8 @@ const Signup = () => {
             Register as <span>User</span>
           </h2>
           <div>
-            <span>
-              Select your Role
+            <span className='selectBold'>
+              Select your Role:
             </span>
             <div className='userRadio'>
               <label htmlFor="employer_role">Employer</label>
@@ -126,8 +135,8 @@ const Signup = () => {
                 id='employer_role'
                 value='employer'
                 checked={selectedRole === 'employer'}
-                onChange={handleRadioChange} 
-                />
+                onChange={handleRadioChange}
+              />
               <label htmlFor="user_role">User</label>
               <input
                 type="radio"
@@ -135,15 +144,15 @@ const Signup = () => {
                 id='user_role'
                 value='user'
                 checked={selectedRole === 'user'}
-                onChange={handleRadioChange} 
-                />
+                onChange={handleRadioChange}
+              />
             </div>
           </div>
 
           <form onSubmit={submitHandler}>
             <div className='input_login'>
               <label htmlFor='firstName'>First Name:</label>
-              <input type='text' id='firstName' name='firstName' value={firstName} onChange={handleChange} />
+              <input id='firstName' name='firstName' value={firstName} onChange={handleChange} />
               <div className='err_input'>{firstNameError}</div>
             </div>
             <div className='input_login'>
@@ -158,7 +167,20 @@ const Signup = () => {
             </div>
             <div className='input_login'>
               <label htmlFor='password'>Password:</label>
-              <input type='password' id='password' name='password' value={password} onChange={handleChange} />
+              <div className='input_eye'>
+                <input
+                  type={signupPassVisible ? "text" : "password"}
+                  id='password'
+                  name='password'
+                  value={password}
+                  onChange={handleChange}
+                />
+                <FontAwesomeIcon
+                  icon={signupPassVisible ? faEyeSlash : faEye}
+                  onClick={toggleSignupPassVisibile}
+                  className='fontIcon'
+                />
+              </div>
               <div className='err_input'>{passwordError}</div>
             </div>
             <button type='submit'>Register</button>

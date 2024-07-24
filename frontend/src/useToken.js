@@ -8,13 +8,13 @@ export const useAuth = () => {
 
 const useToken = () => {
   const getToken = () => {
-    const tokenString = window.localStorage.getItem('userInfo');
+    const tokenString = window.sessionStorage.getItem('userInfo');
     const userToken = JSON.parse(tokenString);
     return userToken?.token;
   };
 
   const getUserInfo = () => {
-    const tokenString = window.localStorage.getItem('userInfo');
+    const tokenString = window.sessionStorage.getItem('userInfo');
     const userToken = JSON.parse(tokenString);
     return userToken?.user;
   };
@@ -23,13 +23,13 @@ const useToken = () => {
   const [userInfo, setUserInfo] = useState(getUserInfo());
 
   const saveToken = (userToken) => {
-    window.localStorage.setItem('userInfo', JSON.stringify(userToken));
+    window.sessionStorage.setItem('userInfo', JSON.stringify(userToken));
     setToken(userToken.token);
     setUserInfo(userToken.user);
   };
 
   const removeToken = () => {
-    window.localStorage.removeItem('userInfo');
+    window.sessionStorage.removeItem('userInfo');
     setToken(null);
     setUserInfo(null);
   };

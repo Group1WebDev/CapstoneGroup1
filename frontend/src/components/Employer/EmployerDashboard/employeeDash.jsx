@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
-import EmployerSidebar from '../sidebar';
 import './employeeDash.css';
 import userImage from '../../../images/dummyLogo1.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPenToSquare, faTrash, faBars } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 function EmployeeDash() {
+    const navigate = useNavigate();
+
+    const handleJobListViewAll = () => {
+        navigate('/employer/JobsPosted');
+    };
     return (
         <>
             <h1 className='heading_top'>Dashboard</h1>
             <section className='candidates_table'>
-                <h2>Applicants List</h2>
+                <div className='flexRowContainer'>
+                    <h2>Applicants List</h2>
+                    <span><button className='view_allBtn'>View All</button></span>
+                </div>
+
+
                 <table id="candidates_tb">
                     <tr>
                         <th>Sr. No.</th>
@@ -45,7 +55,11 @@ function EmployeeDash() {
 
 
             <section className='job_postedTable'>
-                <h3>Jobs Posted</h3>
+                <div className='flexRowContainer'>
+                    <h3>Jobs Posted</h3>
+                    <span><button className='view_allBtn' onClick={handleJobListViewAll}>View All</button></span>
+                </div>
+
                 <table id="candidates_tb">
                     <tr>
                         <th>Job Title</th>
