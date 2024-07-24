@@ -12,10 +12,10 @@ function Header() {
   const navigate = useNavigate();
 
   const logout = () => {
-    removeToken()
-    setIsLoggedIn(false)
+    removeToken();
+    setIsLoggedIn(false);
     window.sessionStorage.removeItem('userInfo');
-    navigate('/')
+    navigate('/');
   };
 
   useEffect(() => {
@@ -23,8 +23,7 @@ function Header() {
     const storageToken = storageUserInfo ? JSON.parse(storageUserInfo).token : null;
     setIsLoggedIn(storageToken !== null && storageToken !== '');
   }, [token]);
-  useEffect(() => {
-  }, [location.pathname, userInfo]);
+  useEffect(() => {}, [location.pathname, userInfo]);
 
   const isUserLogged = userInfo?.role === 'user';
   const isEmployerLogged = userInfo?.role === 'employer';
@@ -56,6 +55,11 @@ function Header() {
                 <li>
                   <NavLink activeclassname='is-active' to='/aboutUs'>
                     About Us
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink activeclassname='is-active' to='/userProfile'>
+                    Profile
                   </NavLink>
                 </li>
               </>

@@ -17,10 +17,11 @@ import './responsive.css';
 
 import { AuthProvider, useAuth } from './useToken';
 import EmployerProfile from './components/Employer/EmployerProfile/employerProfile';
-import ProfilePage from './components/Profile/profilePage';
+import ProfilePage from './components/Profile/updateProfile';
 import ForgotPasswordScreen from './components/ForgotPassword/forgotPassword';
 import JobDescription from './components/JobDescription/jobDescription.jsx';
 import EmployerLayout from './EmployerLayout.jsx';
+import { AddProfileDetails } from './components/Profile/addProfileDetails.jsx';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -58,7 +59,6 @@ function Home() {
 }
 
 function RouteMain() {
-
   return (
     <div>
       <Routes>
@@ -127,19 +127,21 @@ function RouteMain() {
           }
         />
         <Route
-          path='/jobDescription'
+          path='/jobDescription/:id'
           element={
             <Layout>
               <JobDescription />
             </Layout>
           }
         />
-
-
-
-
-
-
+        <Route
+          path='/addProfile'
+          element={
+            <Layout>
+              <AddProfileDetails />
+            </Layout>
+          }
+        />
 
         {/* Employee Portal Routes */}
 

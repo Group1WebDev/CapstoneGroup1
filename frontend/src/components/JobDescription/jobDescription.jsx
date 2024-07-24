@@ -1,72 +1,109 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './jobDescription.css';
-import companyIco from '../../images/dummyLogo2.jpeg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDollarSign, faMapMarkerAlt, faBriefcase, faLanguage, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { useParams } from 'react-router-dom';
 
 function JobDescription() {
-    const [requiredSkills, setRequiredSkills] = useState(['Java', 'ROR', 'Js']);
-    return (
-        <section className='jobDescriptionParent'>
-            <div className='banner_section'>
-                <div className='container'>
-                    <div className='description_flex'>
-                        <div className='companyHead'>
-                            <img src={companyIco} alt="Company Icon" />
-                            <h1>Job Title is this</h1>
-                        </div>
-                        <button className='description_apply'>Apply Now</button>
-                    </div>
-                </div>
+  const { id } = useParams();
+  const [jobDetails, setJobDetails] = useState(null);
+
+  useEffect(() => {
+    const fetchJobDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:5001/jobs/${id}`);
+        if (!response.ok) {
+          throw new Error('err to fetch job details');
+        }
+        const data = await response.json();
+        setJobDetails(data);
+      } catch (error) {
+        console.error('err fetching job details:', error);
+      }
+    };
+
+    fetchJobDetails();
+  }, [id]);
+
+  if (!jobDetails) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <section className='jobDescriptionParent'>
+      <div className='banner_section'>
+        <div className='container'>
+          <div className='description_flex'>
+            <div className='companyHead'>
+              {/* <img src={jobDetails.logo} alt='Company Logo' className='company_logo' /> */}
+              <h1>{jobDetails.jobTitle}</h1>
             </div>
-            <div className='jobDetailSection'>
-                <div className='container'>
-                    <h2>About Job</h2>
-                    <div className='jobDescription'>
-                        <div className='description_flex'>
-                            <h3>Job Title is this</h3>
-                            <div className='job_type'>Part-Time</div>
-                        </div>
-
-                        <p>Company name & Job location</p>
-                        <span>Salary Range is this</span>
-
-                        <div className='description_flex'>
-                            <div className='job_typeCat'>
-                                <h4 className='heading_jobDesc'>Job Category</h4>
-                                <span>Web Development</span>
-                            </div>
-                            <div className='job_typeCat'>
-                                <h4 className='heading_jobDesc'>Experience Type</h4>
-                                <span>Beginner</span>
-                            </div>
-                        </div>
-
-                        <div className='skillSet'>
-                            <h4 className='heading_jobDesc'>Skills Required</h4>
-                            <div className='skilss_container'>
-                                {requiredSkills.map((skill, i) => (
-                                    <div key={i} className='skill_tags'>
-                                        {skill}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className='job_description'>
-                            <h4 className='heading_jobDesc'>Job Description</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                        </div>
-
-                        <div className='Language_required'>
-                            <h3 className='heading_jobDesc'>Languages Required</h3>
-                            <div className='language_prnt'>
-                                <div className='lan_re'>English</div>
-                                <div className='lan_re'>Hindi</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <button className='description_apply'>Apply Now</button>
+          </div>
+        </div>
+      </div>
+      <div className='jobDetailSection'>
+        <div className='container'>
+          <h2>About Job</h2>
+          <div className='jobDescription'>
+            <div className='description_flex'>
+              <h3>{jobDetails.jobTitle}</h3>
+              <div className='job_type'>{jobDetails.jobType}</div>
             </div>
-        </section>
-    )
+
+            <p>
+              <FontAwesomeIcon icon={faMapMarkerAlt} /> {jobDetails.province}, {jobDetails.country}
+            </p>
+            <p>
+              ${jobDetails.minSalary.toLocaleString()} - ${jobDetails.maxSalary.toLocaleString()} per annum
+            </p>
+
+            <div className='description_flex'>
+              <div className='job_typeCat'>
+                <h4 className='heading_jobDesc'>Job Category</h4>
+                <span>{jobDetails.jobCategory}</span>
+              </div>
+              <div className='job_typeCat'>
+                <h4 className='heading_jobDesc'>Experience Level</h4>
+                <span>{jobDetails.experienceLevel}</span>
+              </div>
+            </div>
+
+            {jobDetails.requiredSkills && (
+              <div className='skillSet'>
+                <h4 className='heading_jobDesc'>Skills Required</h4>
+                <div className='skilss_container'>
+                  {jobDetails.requiredSkills.map((skill, i) => (
+                    <div key={i} className='skill_tags'>
+                      {skill}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className='job_description'>
+              <h4 className='heading_jobDesc'>Job Description</h4>
+              <p>{jobDetails.jobDescription}</p>
+            </div>
+
+            {jobDetails.languageRequirement && (
+              <div className='Language_required'>
+                <h3 className='heading_jobDesc'>Languages Required</h3>
+                <div className='language_prnt'>
+                  {jobDetails.languageRequirement.map((language, i) => (
+                    <div key={i} className='lan_re'>
+                      {language}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
-export default JobDescription
+export default JobDescription;
