@@ -22,6 +22,7 @@ import ForgotPasswordScreen from './components/ForgotPassword/forgotPassword';
 import JobDescription from './components/JobDescription/jobDescription.jsx';
 import EmployerLayout from './EmployerLayout.jsx';
 import { AddProfileDetails } from './components/Profile/addProfileDetails.jsx';
+import JobsPosted from './components/Employer/JobsPostedEmployer/jobsListEmployer.jsx';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -171,6 +172,26 @@ function RouteMain() {
             <EmployerLayout>
               <EmployerParent>
                 <EmployerProfile />
+              </EmployerParent>
+            </EmployerLayout>
+          }
+        />
+        <Route
+          path='/employer/Profile'
+          element={
+            <EmployerLayout>
+              <EmployerParent>
+                <EmployerProfile />
+              </EmployerParent>
+            </EmployerLayout>
+          }
+        />
+        <Route
+          path='/employer/JobsPosted'
+          element={
+            <EmployerLayout>
+              <EmployerParent>
+                <JobsPosted />
               </EmployerParent>
             </EmployerLayout>
           }

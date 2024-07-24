@@ -37,7 +37,7 @@ const getJobPostingById = async (req, res) => {
 // update job
 const updateJobPosting = async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['jobTitle', 'jobCategory', 'jobType', 'experienceLevel', 'minSalary', 'maxSalary', 'languageRequirement', 'jobDescription', 'addressLine', 'city', 'province', 'country'];
+  const allowedUpdates = ['jobTitle', 'jobCategory', 'jobType', 'experienceLevel', 'minSalary', 'maxSalary', 'languageRequirement', 'jobDescription', 'addressLine', 'city', 'province', 'country', 'jobStatus', 'jobVacancies', 'jobApplications'];
   const allCheck = updates.every((update) => allowedUpdates.includes(update));
 
   if (!allCheck) {

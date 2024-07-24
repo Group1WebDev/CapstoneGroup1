@@ -22,6 +22,7 @@ function AddNewJob() {
     jobType: '',
     experienceLevel: '',
     jobDescription: '',
+    vacancies: '',
   });
 
   const handleSliderInput = (e) => {
@@ -207,6 +208,12 @@ function AddNewJob() {
             <div className='input_parent'>
               <label>Country</label>
               <input type='text' value={exactLocation.country} readOnly />
+            </div>
+          </div>
+          <div>
+            <div className='input_parent'>
+              <label>Total Vacancies</label>
+              <input type='number' name='vacancies' value={formValues.vacancies} onChange={setFormValues} />
             </div>
           </div>
           <div className='submit_btn'>

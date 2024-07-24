@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './forgotPassword.css';
 import forgotImage from '../../images/forgotScreen.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,6 +16,7 @@ function ForgotPasswordScreen() {
   const [newPassVisible, setNewPassVisible] = useState(false);
   const [confPassVisible, setConfPassVisible] = useState(false);
 
+
   const togglenewPassVisibile = () => {
     setNewPassVisible(!newPassVisible);
   };
@@ -23,6 +24,7 @@ function ForgotPasswordScreen() {
     setConfPassVisible(!confPassVisible);
   };
 
+  
   const handleOtpRequest = async (e) => {
     e.preventDefault();
     try {
@@ -73,6 +75,14 @@ function ForgotPasswordScreen() {
       console.error('Error:', error);
     }
   };
+
+
+  useEffect(() => {
+    const mailInSession = window.sessionStorage.getItem('loginEmail');
+    if (mailInSession) {
+      setUserEmail(mailInSession);
+    }
+  }, []);
 
   return (
     <div className='forgotPageParent'>

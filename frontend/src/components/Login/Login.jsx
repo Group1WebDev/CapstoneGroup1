@@ -93,6 +93,9 @@ const Login = () => {
   };
 
   const gotoForgotScreen = () => {
+    if (email) {
+      window.sessionStorage.setItem('loginEmail', email);
+    }
     navigate(`/forgotPassword`);
   };
 
