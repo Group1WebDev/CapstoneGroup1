@@ -24,6 +24,8 @@ import EmployerLayout from './EmployerLayout.jsx';
 import { AddProfileDetails } from './components/Profile/addProfileDetails.jsx';
 import JobsPosted from './components/Employer/JobsPostedEmployer/jobsListEmployer.jsx';
 import { JobApplication } from './components/JobApplication/jobApplication.jsx';
+import CandidatesList from './components/Employer/CandidatesList/candidates.jsx';
+import ResumeBuilder from './components/ResumeBuilder/resumeBuilder';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -158,12 +160,20 @@ function RouteMain() {
           }
         />
 
-        <Route path='/userProfile' element={<Layout>{userDetails?.userDesignation == null ? <AddProfileDetails /> : <ProfilePage />}</Layout>} />
-        <Route
-          path='/jobApplication/:id'
+        {/* <Route
+          path='/addProfile'
           element={
             <Layout>
-              <JobApplication />
+              
+            </Layout>
+          }
+        /> */}
+        <Route path='/userProfile' element={<Layout>{userDetails?.userDesignation == null ? <AddProfileDetails /> : <ProfilePage />}</Layout>} />
+        <Route
+          path='/resume-builder'
+          element={
+            <Layout>
+              <ResumeBuilder />
             </Layout>
           }
         />
@@ -224,6 +234,16 @@ function RouteMain() {
             <EmployerLayout>
               <EmployerParent>
                 <JobsPosted />
+              </EmployerParent>
+            </EmployerLayout>
+          }
+        />
+        <Route
+          path='/emplpoyer/candidatesList'
+          element={
+            <EmployerLayout>
+              <EmployerParent>
+                <CandidatesList />
               </EmployerParent>
             </EmployerLayout>
           }

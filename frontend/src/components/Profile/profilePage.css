@@ -97,7 +97,8 @@ select {
     padding: 40px;
     display: flex;
 }
-.addProfileParent form  .form_groupArea{
+
+.addProfileParent form .form_groupArea {
     flex: 2;
 }
 
@@ -132,7 +133,8 @@ select {
     justify-content: space-between;
     gap: 50px;
 }
-.addProfileParent .flex_pContainer  input#imagePicker {
+
+.addProfileParent .flex_pContainer input#imagePicker {
     width: 200px;
     height: 200px;
     background: #ebebeb;
@@ -140,7 +142,8 @@ select {
     position: relative;
     cursor: pointer;
 }
-.addProfileParent .flex_pContainer input#imagePicker::after {
+
+/* .addProfileParent .flex_pContainer input#imagePicker::after {
     content: '';
     position: absolute;
     background-image: url(../../images/addicon.jpg);
@@ -149,4 +152,55 @@ select {
     bottom: 0;
     right: 0;
     background-size: 100%;
+} */
+.profilePicDiv {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+.profilePicDiv .top_div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid rgb(209, 209, 209);
+    cursor: pointer;
+}
+
+.profilePicDiv .top_div img {
+    width: 100%;
+    height: 100%;
+}
+
+.profilePage .personal_details .profile_input {
+    margin-bottom: 0;
+}
+
+.profilePage.userProfile .update_button {
+    margin-top: 40px;
+}
+
+
+@media (max-width: 480px) {
+    .img_prnt {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .profilePage .icon_content{
+        flex: 1;
+    }
+    .user_detail{
+        flex: 1;
+    }
+    .profilePage .info_area{
+        margin-top: 30px;
+        align-items: flex-start;
+    }
+    .profilePage.userProfile .container{
+        padding: 0 20px;
+    }
 }
