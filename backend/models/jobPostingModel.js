@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
 
+
+
 const jobPostingSchema = new mongoose.Schema({
   jobTitle: {
     type: String,
     required: true,
+  },
+  posted_by:{
+    type:mongoose.Schema.Types.ObjectId,ref:"User"
   },
   jobCategory: {
     type: String,
@@ -64,6 +69,22 @@ const jobPostingSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  applied_by:[
+    {
+      userId:{type:mongoose.Schema.Types.ObjectId,ref:"User"},
+      expYears: {
+        type: Number,
+      },
+      resume: {
+        type: String,
+       
+      },
+      coverLetter: {
+        type: String,
+       
+      }
+    }
+  ]
 });
 
 const JobPosting = mongoose.model('JobPosting', jobPostingSchema);
