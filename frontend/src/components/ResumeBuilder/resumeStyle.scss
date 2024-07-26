@@ -1,0 +1,54 @@
+.print-page {
+  p {
+    line-height: 20px !important;
+  }
+  .head {
+    text-align: center;
+
+    .full_name {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .job_title {
+      font-size: 14px;
+    }
+    .basic_info_line {
+      font-size: 14px;
+      margin-top: 14px;
+    }
+  }
+  .professional_summary {
+    font-size: 14px;
+    margin-top: 34px;
+  }
+  .section_title {
+    font-weight: 600;
+    border-bottom: 1px solid #222;
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+  .section {
+    margin-top: 28px;
+
+    ul {
+      padding: 18px 0 0 18px;
+    }
+  }
+  ul {
+    list-style: disc;
+  }
+  li {
+    line-height: 20px !important;
+  }
+
+  .section-loop {
+    margin-bottom: 16px;
+  }
+  .skills {
+    ul {
+      padding-top: 0 !important;
+    }
+  }
+}

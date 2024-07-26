@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { z } from 'zod';
 import './register.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const signupSchema = z.object({
   email: z.string({ required_error: 'Email cannot be empty' }).email({ message: 'Please enter a valid email address' }),
@@ -21,6 +23,13 @@ const Signup = () => {
   const [passwordError, setPasswordError] = useState('');
 
   const navigate = useNavigate();
+
+  const [signupPassVisible, setSignupPassVisible] = useState(false);
+
+  const toggleSignupPassVisibile = () => {
+    setSignupPassVisible(!signupPassVisible);
+  }
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -58,7 +67,7 @@ const Signup = () => {
 
     if (validate.success) {
       try {
-        const result = await fetch('http://localhost:5000/userRegister', {
+        const result = await fetch('http://localhost:5001/userRegister', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -66,12 +75,18 @@ const Signup = () => {
             password: password,
             firstname: firstName,
             lastname: lastName,
+            role: selectedRole,
           }),
         });
         if (result.ok) {
           const resultJson = await result.json();
           console.log(resultJson);
-          navigate('/login');
+          if (selectedRole === 'user') {
+            navigate('/userProfile');
+          }
+          else {
+            navigate('/login');
+          }
         } else {
           alert('Registration failed!');
         }
@@ -100,6 +115,12 @@ const Signup = () => {
     }
   };
 
+  const [selectedRole, setSelectedRole] = useState('');
+
+  const handleRadioChange = (event) => {
+    setSelectedRole(event.target.value);
+  };
+
   return (
     <div className='LoginBg registerPage'>
       <div className='LoginBox'>
@@ -107,10 +128,36 @@ const Signup = () => {
           <h2 className='registerHead'>
             Register as <span>User</span>
           </h2>
+          <div>
+            <span className='selectBold'>
+              Select your Role:
+            </span>
+            <div className='userRadio'>
+              <label htmlFor="employer_role">Employer</label>
+              <input
+                type='radio'
+                name='userRole'
+                id='employer_role'
+                value='employer'
+                checked={selectedRole === 'employer'}
+                onChange={handleRadioChange}
+              />
+              <label htmlFor="user_role">User</label>
+              <input
+                type="radio"
+                name='userRole'
+                id='user_role'
+                value='user'
+                checked={selectedRole === 'user'}
+                onChange={handleRadioChange}
+              />
+            </div>
+          </div>
+
           <form onSubmit={submitHandler}>
             <div className='input_login'>
               <label htmlFor='firstName'>First Name:</label>
-              <input type='text' id='firstName' name='firstName' value={firstName} onChange={handleChange} />
+              <input id='firstName' name='firstName' value={firstName} onChange={handleChange} />
               <div className='err_input'>{firstNameError}</div>
             </div>
             <div className='input_login'>
@@ -125,7 +172,20 @@ const Signup = () => {
             </div>
             <div className='input_login'>
               <label htmlFor='password'>Password:</label>
-              <input type='password' id='password' name='password' value={password} onChange={handleChange} />
+              <div className='input_eye'>
+                <input
+                  type={signupPassVisible ? "text" : "password"}
+                  id='password'
+                  name='password'
+                  value={password}
+                  onChange={handleChange}
+                />
+                <FontAwesomeIcon
+                  icon={signupPassVisible ? faEyeSlash : faEye}
+                  onClick={toggleSignupPassVisibile}
+                  className='fontIcon'
+                />
+              </div>
               <div className='err_input'>{passwordError}</div>
             </div>
             <button type='submit'>Register</button>

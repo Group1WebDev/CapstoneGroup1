@@ -46,7 +46,7 @@
   position: absolute;
 }
 
-.input_box {
+.search-container .input_box {
   border: 1px solid #dfdfdf;
   outline: none;
   padding: 16px;
@@ -218,4 +218,117 @@
 .trending_card p {
   font-size: 14px;
   color: var(--font-color);
+}
+
+
+@media (max-width: 1200px) {
+  .search-container {
+      grid-template-columns: 1fr 1fr;
+      padding: 20px 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .headSection h1 {
+      font-size: 32px;
+      text-align: center;
+  }
+
+  .headSection p {
+      font-size: 16px;
+      text-align: center;
+  }
+
+  .flexCenter {
+      width: 100%;
+  }
+
+  .search-container {
+      grid-template-columns: 1fr;
+      padding: 20px;
+      left: 5%;
+      right: 5%;
+      bottom: -30px;
+      bottom: -60px;
+  }
+
+  .register_Section .left {
+      margin-top: 40px;
+  }
+
+  .register_Section {
+      grid-template-columns: 1fr;
+  }
+
+  .app-download-content {
+      flex-direction: column;
+  }
+
+  .image_area .image_bg .img_2 {
+      top: 20px;
+  }
+
+  .phone-image {
+      max-height: 300px;
+  }
+  /* .nav {
+      display: none;
+    }
+  
+    .mobile-menu-button {
+      display: block;
+    }
+  
+    .mobile-menu.open {
+      display: flex;
+    } */
+}
+
+@media (max-width: 480px) {
+  .search-container {
+      padding: 15px;
+      bottom: -70px;
+  }
+
+  .input_box,
+  .select_box {
+      margin-bottom: 10px;
+  }
+
+  .search_button {
+      padding: 8px 16px;
+      font-size: 14px;
+  }
+
+  .app-info {
+      text-align: center;
+  }
+
+  .app-info h2 {
+      font-size: 1.6rem;
+  }
+
+  .phone-image {
+      margin-top: 50px;
+  }
+
+  .app-info p {
+      font-size: 14px;
+      text-align: center;
+  }
+
+  .trending_card {
+      flex: 1 1 100%;
+  }
+
+  .container.trending {
+      flex-direction: column;
+  }
+
+  footer {
+      text-align: center;
+  }
+  .register_Section .left{
+    text-align: center;
+  }
 }

@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 module.exports = async (req, res) => {
   try {
-    const { email, password, firstname, lastname } = req.body;
+    const { email, password, firstname, lastname, role } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required' });
@@ -21,6 +21,7 @@ module.exports = async (req, res) => {
       password: hashedPassword,
       firstname,
       lastname,
+      role
     });
 
     await user.save();

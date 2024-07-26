@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
       expiresIn: '2h',
     });
 
-    res.status(200).json({ token: token, user: { id: user._id, email: user.email, firstname: user.firstname, lastname: user.lastname } });
+    res.status(200).json({ token: token, user: { id: user._id, email: user.email, firstname: user.firstname, lastname: user.lastname, role:user.role } });
   } catch (error) {
     console.error('Error during login:', error);
     return res.status(500).json({ error: 'Internal server error' });

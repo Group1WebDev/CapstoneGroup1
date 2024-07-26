@@ -20,6 +20,51 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    profilePic:{
+      type: String,
+      default:null
+    },
+    role: {
+      type: String,
+      enum: ['employer', 'user'],
+      default: 'user',
+    },
+    userDesignation: {
+      type: String,
+      default: null
+    },
+    userSkills: {
+      type: [String],
+      default: null
+    },
+    locDetail:{
+      type:String,
+      default:null
+    },
+    bio:{
+      type:String,
+      default:null
+    },
+    gender:{
+      type:String,
+      default:null
+    },
+    userEducation:{
+      
+        institutionName:String,
+        field:String,
+        completionDate:Date
+      
+    
+    },
+    userExp:{
+     
+        companyName:String,
+        jobDesignation:String,
+        jobStartDate:Date,
+        jobEndDate:Date,
+     
+    }
   },
   {
     timestamps: true,
