@@ -74,10 +74,47 @@ const deleteJobPosting = async (req, res) => {
   }
 };
 
+const getJobsPostedByEmployer = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const employerJobs = await JobPosting.find({ posted_by: id }).populate('applied_by.userId');
+
+    res.status(200).send(employerJobs);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+// apply for new job
+const applyToJob = async (req, res) => {
+  try {
+    const jobId = req.params.id;
+    const { totalExp, resume, userCoverL, userId } = req.body;
+    const newApplicant = {
+      expYears: Number(totalExp),
+      resume: 'http://localhost:5001/profiles/' + req.file.filename,
+      coverLetter: userCoverL,
+      userId: userId,
+    };
+    console.log(newApplicant);
+    const applyJob = await JobPosting.findByIdAndUpdate(
+      { _id: jobId },
+
+      { $push: { applied_by: newApplicant }, $inc: { jobApplications: 1 } }
+    );
+    res.status(200).json({ message: 'Application submitted successfully' });
+  } catch (error) {
+    res.status(500).send(error);
+    console.log(error);
+  }
+};
+
 module.exports = {
   createJobPosting,
   getJobPostings,
   getJobPostingById,
   updateJobPosting,
   deleteJobPosting,
+  getJobsPostedByEmployer,
+  applyToJob,
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
@@ -61,6 +61,34 @@ function Home() {
 }
 
 function RouteMain() {
+  const { userInfo } = useAuth();
+  const [userDetails, setUserDetails] = useState();
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/get_Userprofile/' + userInfo.id);
+        if (!response.ok) {
+          throw new Error(`err ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(data.data, 'data response of api');
+        setUserDetails(data.data);
+      } catch (error) {
+        console.error('error fetching data:', error);
+      }
+    };
+    if (userInfo) {
+      fetchProfile();
+    }
+    // fetchProfile();
+  }, [userInfo]);
+
+  useEffect(() => {
+    if (userDetails) {
+      console.log('Updated userDetails:', userDetails);
+    }
+  }, [userDetails]);
+
   return (
     <div>
       <Routes>
@@ -120,14 +148,7 @@ function RouteMain() {
             </Layout>
           }
         />
-        <Route
-          path='/userProfile'
-          element={
-            <Layout>
-              <ProfilePage />
-            </Layout>
-          }
-        />
+
         <Route
           path='/jobDescription/:id'
           element={
@@ -136,11 +157,13 @@ function RouteMain() {
             </Layout>
           }
         />
+
+        <Route path='/userProfile' element={<Layout>{userDetails?.userDesignation == null ? <AddProfileDetails /> : <ProfilePage />}</Layout>} />
         <Route
-          path='/addProfile'
+          path='/jobApplication/:id'
           element={
             <Layout>
-              <AddProfileDetails />
+              <JobApplication />
             </Layout>
           }
         />
