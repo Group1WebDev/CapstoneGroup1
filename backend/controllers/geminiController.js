@@ -19,10 +19,24 @@ async function geminiRun(req, res) {
   const chatSession = model.startChat({
     generationConfig,
   });
+  console.log(req.body.prompt);
+  if (req.body.type == 'professional_summary') {
+    const result = await chatSession.sendMessage(`Write a professional summary for resume according to this prompt: ${req.body.prompt}, give me this in p tag in plain HTML code`);
 
-  const result = await chatSession.sendMessage(`give me only plain text not other markdowns and you need to give me professional summary for resume according to user role -> role '${req.body.role}'`);
+    return res.status(200).json({ output: result.response.text() });
+  }
+  if (req.body.type == 'key_skills') {
+    const result = await chatSession.sendMessage(`Write a key_skills for resume according to this prompt: ${req.body.prompt}, give me this in ul and li as bullet points in the plain HTML code`);
 
-  res.status(200).json({ output: result.response.text() });
+    return res.status(200).json({ output: result.response.text() });
+  }
+  if (req.body.type == 'work_summary') {
+    const result = await chatSession.sendMessage(`Write a professional work summary for resume according to this title: ${req.body.title} and use this prompt: ${req.body.prompt}, give me this in ul and li as bullet points in the plain HTML code`);
+
+    return res.status(200).json({ output: result.response.text() });
+  }
+
+  return res.status(200).json({ output: 'NOT FOUND ANY PROMPT BY USER' });
 }
 
 module.exports = { geminiRun };
