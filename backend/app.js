@@ -3,7 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+var path = require('path');
 dotenv.config({ path: './.env' });
 
 const app = express();
@@ -13,6 +13,11 @@ const PORT = process.env.PORT || 5001;
 app.use(bodyParser.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/profiles', express.static(path.join(__dirname, 'uploads')));
+// Routes
+const routes = require('./routes');
+app.use(routes);
 
 // Routes
 const routes = require('./routes');

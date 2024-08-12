@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './jobApplication.css';
 import CompanyLogo from '../../images/dummyLogo1.jpg';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const JobApplication = () => {
     let navigate = useNavigate();
@@ -66,7 +67,8 @@ export const JobApplication = () => {
                 }
 
                 const result = await response.json();
-                console.log('Application Submitted :', result);
+                console.log('Application Submitted', result);
+                alert('Application Submitted');
                 navigate('/');
             } catch (error) {
                 console.error('err submitting application:', error);
@@ -116,6 +118,11 @@ export const JobApplication = () => {
                                 <label>Cover Letter</label>
                                 <textarea name='userCoverL' rows='5' value={userProfile.userCoverL} onChange={handleChange} />
                                 {submiterrors.userCoverL && <p className="erMessage">{submiterrors.userCoverL}</p>}
+                            </div>
+
+                            <div className='useResume'>
+                                <span>If you want to create a new Resume, then use our Resume Builder by </span>
+                                <NavLink to="/resume-builder">Clicking here</NavLink>
                             </div>
                             <div className='center_content'>
                                 <button className='submit_button'>Apply</button>

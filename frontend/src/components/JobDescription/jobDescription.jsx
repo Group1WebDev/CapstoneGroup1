@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react';
 import './jobDescription.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign, faMapMarkerAlt, faBriefcase, faLanguage, faBuilding } from '@fortawesome/free-solid-svg-icons';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function JobDescription() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [jobDetails, setJobDetails] = useState(null);
+
+  const handleApplyClick = () => {
+    navigate(`/jobApplication/${id}`, { state: { jobDetails } });
+  };
 
   useEffect(() => {
     const fetchJobDetails = async () => {
@@ -38,7 +43,7 @@ function JobDescription() {
               {/* <img src={jobDetails.logo} alt='Company Logo' className='company_logo' /> */}
               <h1>{jobDetails.jobTitle}</h1>
             </div>
-            <button className='description_apply'>Apply Now</button>
+            <button className='description_apply' onClick={handleApplyClick}>Apply Now</button>
           </div>
         </div>
       </div>

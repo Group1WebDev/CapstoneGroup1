@@ -22,7 +22,7 @@ function AddNewJob() {
     jobType: '',
     experienceLevel: '',
     jobDescription: '',
-    vacancies: '',
+    jobVacancies: '',
   });
 
   const handleSliderInput = (e) => {
@@ -67,7 +67,7 @@ function AddNewJob() {
       [name]: value,
     });
   };
-
+  let user= JSON.parse(sessionStorage.getItem('userInfo'))
   const handleSubmit = async (e) => {
     e.preventDefault();
     const jobData = {
@@ -79,6 +79,7 @@ function AddNewJob() {
       city: exactLocation.city,
       province: exactLocation.province,
       country: exactLocation.country,
+      posted_by:user?.user.id
     };
 
     try {
@@ -213,7 +214,7 @@ function AddNewJob() {
           <div>
             <div className='input_parent'>
               <label>Total Vacancies</label>
-              <input type='number' name='vacancies' value={formValues.vacancies} onChange={setFormValues} />
+              <input type='number' name='jobVacancies' value={formValues.jobVacancies} onChange={handleChange} />
             </div>
           </div>
           <div className='submit_btn'>

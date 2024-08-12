@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react';
 import './profilePage.css';
 import { TagsInput } from 'react-tag-input-component';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import { useNavigate } from 'react-router';
+import addiconImage from '../../images/addicon.jpg'
 
 export const AddProfileDetails = () => {
-  const [skillSelected, setSkillSelected] = useState([]);
+  const [skillSelected, setSkillSelected] = useState(['']);
   const [userLocation, setUserLocation] = useState(null);
-
+  const navigate = useNavigate()
   const [userDesignation, setUserDesignation] = useState('');
   const [userBio, setUserBio] = useState('');
   const [userGender, setUserGender] = useState('');
+  const [addPic, setAddPic] = useState(addiconImage)
   const [userEducation, setUserEducation] = useState({
     institutionName: '',
     field: '',
@@ -47,7 +50,15 @@ export const AddProfileDetails = () => {
     }));
   };
 
-  const handleSubmitDetails = (e) => {
+  let user = JSON.parse(sessionStorage.getItem('userInfo'))
+  // console.log(user)
+
+
+  const [profileErrors, setProfileErrors] = useState([]);
+
+
+
+  const handleSubmitDetails = async (e) => {
     e.preventDefault();
     const userProfileData = {
       userDesignation,
@@ -59,7 +70,41 @@ export const AddProfileDetails = () => {
       userExperience,
       userPic,
     };
-    console.log('Data Submitted', userProfileData);
+    console.log(userProfileData)
+    const sumbitData = new FormData()
+    sumbitData.append('userDesignation', userProfileData.userDesignation);
+    sumbitData.append('userSkills', userProfileData.skillSelected);
+    sumbitData.append('locDetail', userProfileData.userLocation);
+    sumbitData.append('bio', userProfileData.userBio);
+    sumbitData.append('gender', userProfileData.userGender);
+    sumbitData.append('userEducation', JSON.stringify(userProfileData.userEducation));
+    sumbitData.append('userExp', JSON.stringify(userProfileData.userExperience));
+    sumbitData.append('profile', userProfileData.userPic);
+    console.log('Data Submitted', sumbitData);
+
+    try {
+      const response = await fetch('http://localhost:5001/updateProfile/' + user.user.id, {
+        method: 'POST',
+        body: sumbitData,
+      });
+
+      if (!response.ok) {
+        console.log('err in submitting profile details');
+      }
+      const result = await response.json();
+      console.log('profile details submitted', result);
+      navigate('/jobList');
+    } catch (error) {
+      console.error('err in submitting profile details', error);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setUserPic(file);
+      setAddPic(URL.createObjectURL(file));
+    }
   };
 
   return (
@@ -154,7 +199,10 @@ export const AddProfileDetails = () => {
 
               <div className='profilePicDiv input_div'>
                 <label htmlFor='imagePicker'>Choose Profile Picture</label>
-                <input type='file' name='userPic' id='imagePicker' accept='.png,.jpeg,.jpg' onChange={(e) => setUserPic(e.target.files[0])} />
+                <input type='file' name='userPic' id='imagePicker' accept='.png,.jpeg,.jpg' onChange={handleImageChange} />
+                <div className='top_div' onClick={() => document.getElementById('imagePicker').click()}>
+                  <img src={addPic} alt='UserProfilePic' />
+                </div>
               </div>
             </form>
           </div>

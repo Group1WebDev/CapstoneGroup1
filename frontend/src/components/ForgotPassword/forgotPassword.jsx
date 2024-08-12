@@ -91,7 +91,7 @@ function ForgotPasswordScreen() {
       </div>
       <div className='forgot_righZone'>
         <h1>Forgot Password</h1>
-        <p>Reset your password by entering current password and new password.</p>
+        <p>Reset your password by verifying otp on your email.</p>
 
         <form onSubmit={handleOtpRequest} style={{ display: otpSent ? 'none' : 'block' }}>
           <div className='input_parent'>

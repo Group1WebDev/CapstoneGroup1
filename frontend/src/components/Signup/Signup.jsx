@@ -81,7 +81,12 @@ const Signup = () => {
         if (result.ok) {
           const resultJson = await result.json();
           console.log(resultJson);
-          navigate('/login');
+          if (selectedRole === 'user') {
+            navigate('/userProfile');
+          }
+          else {
+            navigate('/login');
+          }
         } else {
           alert('Registration failed!');
         }

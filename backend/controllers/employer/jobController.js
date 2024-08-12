@@ -77,6 +77,8 @@ const deleteJobPosting = async (req, res) => {
 const getJobsPostedByEmployer = async (req, res) => {
   const { id } = req.params;
   try {
+    // fetching jobs of employer with applicants data
+    // populate will show full detail of user inside user_id instead of id only
     const employerJobs = await JobPosting.find({ posted_by: id }).populate('applied_by.userId');
 
     res.status(200).send(employerJobs);
@@ -98,8 +100,10 @@ const applyToJob = async (req, res) => {
     };
     console.log(newApplicant);
     const applyJob = await JobPosting.findByIdAndUpdate(
+      // find job by id
       { _id: jobId },
 
+      // push details inside applied_by array and incrementing job application
       { $push: { applied_by: newApplicant }, $inc: { jobApplications: 1 } }
     );
     res.status(200).json({ message: 'Application submitted successfully' });
