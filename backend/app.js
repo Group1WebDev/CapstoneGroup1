@@ -15,9 +15,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/profiles', express.static(path.join(__dirname, 'uploads')));
-// Routes
-const routes = require('./routes');
-app.use(routes);
 
 // Routes
 const routes = require('./routes');

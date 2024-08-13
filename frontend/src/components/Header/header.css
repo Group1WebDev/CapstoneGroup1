@@ -68,7 +68,21 @@
 }
 
 @media (max-width: 768px) {
-  .mainHead ul {
-    display: none;
+  .mainHead ul{
+
+  }
+  .mainHead nav ul li {
+    margin-right: 16px;
+  }
+  .mainHead nav ul li a{
+    font-size: 14px;
+  }
+  .register_button{
+
+  }
+}
+@media (max-width: 768px) {
+  .mainHead nav ul li{
+    text-align: center;
   }
 }

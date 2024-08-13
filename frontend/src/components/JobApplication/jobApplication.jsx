@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './jobApplication.css';
 import CompanyLogo from '../../images/dummyLogo1.jpg';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import { Link,NavLink, useHistory } from 'react-router-dom';
 
 export const JobApplication = () => {
     let navigate = useNavigate();
@@ -97,7 +97,8 @@ export const JobApplication = () => {
                                 <span>{jobDetails.province}, {jobDetails.country}</span>
                             </>
                         )}
-                        <a href="">Back To Job Description</a>
+                      <a onClick={() => navigate(-1)}>Back To Job Description</a>
+
                     </div>
                     <div className='pagePartitionRight'>
                         <h2>Candidate Details</h2>

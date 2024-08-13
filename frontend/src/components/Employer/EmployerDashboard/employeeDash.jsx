@@ -58,24 +58,26 @@ function EmployeeDash() {
                 </div>
 
 
-                <table id="candidates_tb">
-                    <tr>
-                        <th>Sr. No.</th>
-                        <th>Image</th>
-                        <th>Applicant Name</th>
-                        <th>Job Title</th>
-                        <th>Action</th>
-                    </tr>
-                    {applicants.map((applicant,index) =>
+                <div className='tableParent'>
+                    <table id="candidates_tb">
                         <tr>
-                            <td>{index+1}</td>
-                            <td className='image_cell'><img src={applicant.user.profilePic} alt="userImage" /></td>
-                            <td>{applicant.user.firstname}</td>
-                            <td>{applicant.jobTitle}</td>
-                            <td><a href="">View</a></td>
+                            <th>Sr. No.</th>
+                            <th>Image</th>
+                            <th>Applicant Name</th>
+                            <th>Job Title</th>
+                            <th>Action</th>
                         </tr>
-                    )}
-                </table>
+                        {applicants.map((applicant, index) =>
+                            <tr>
+                                <td>{index + 1}</td>
+                                <td className='image_cell'><img src={applicant.user.profilePic} alt="userImage" /></td>
+                                <td>{applicant.user.firstname}</td>
+                                <td>{applicant.jobTitle}</td>
+                                <td><a href="">View</a></td>
+                            </tr>
+                        )}
+                    </table>
+                </div>
             </section>
 
 
@@ -85,34 +87,36 @@ function EmployeeDash() {
                     <span><button className='view_allBtn' onClick={handleJobListViewAll}>View All</button></span>
                 </div>
 
-                <table id="candidates_tb">
-                    <tr>
-                        <th>Job Title</th>
-                        <th>Candidates Applied</th>
-                        <th>Vacancies</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                    {jobs.length !== 0 && jobs.map((job) =>
+                <div className='tableParent'>
+                    <table id="candidates_tb">
                         <tr>
-                            <td>{job.jobTitle}</td>
-                            <td>{job.jobApplications}</td>
-                            <td>{job.jobVacancies} Vacancies</td>
-                            <td>{job.jobStatus ? "Active" : "Inactive"}</td>
-                            <td className='IconsDiv'>
-                                <div className='icon'>
-                                    <FontAwesomeIcon icon={faEye} />
-                                </div>
-                                <div className='icon'>
-                                    <FontAwesomeIcon icon={faPenToSquare} />
-                                </div>
-                                <div className='icon'>
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </div>
-                            </td>
+                            <th>Job Title</th>
+                            <th>Candidates Applied</th>
+                            <th>Vacancies</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
-                    )}
-                </table>
+                        {jobs.length !== 0 && jobs.map((job) =>
+                            <tr>
+                                <td>{job.jobTitle}</td>
+                                <td>{job.jobApplications}</td>
+                                <td>{job.jobVacancies} Vacancies</td>
+                                <td>{job.jobStatus ? "Active" : "Inactive"}</td>
+                                <td className='IconsDiv'>
+                                    <div className='icon'>
+                                        <FontAwesomeIcon icon={faEye} />
+                                    </div>
+                                    <div className='icon'>
+                                        <FontAwesomeIcon icon={faPenToSquare} />
+                                    </div>
+                                    <div className='icon'>
+                                        <FontAwesomeIcon icon={faTrash} />
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
+                    </table>
+                </div>
             </section>
         </>
     )

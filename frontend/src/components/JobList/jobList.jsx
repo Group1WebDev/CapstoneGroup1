@@ -8,6 +8,9 @@ export default function Jobs() {
   const [radius, setRadius] = useState(100);
   const [salary, setSalary] = useState(50000);
   const [jobsListing, setJobsListing] = useState([]);
+  const [filterExpand, setFilterExpand] = useState(false);
+
+
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -58,7 +61,8 @@ export default function Jobs() {
 
         <div className='content_area'>
           <div className='container'>
-            <div className='filter_area'>
+          <button className='filterExpandBtn' onClick={() => setFilterExpand(!filterExpand)}>Expand Filters</button>
+          <div className={`filter_area ${filterExpand ? '' : 'filterCollapsed'}`}>
               <h2>Location</h2>
               <div className='areaSlider'>
                 <label>Search Radius</label>

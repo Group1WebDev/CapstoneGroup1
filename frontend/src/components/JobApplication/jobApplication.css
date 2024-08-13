@@ -161,4 +161,23 @@
         flex-direction: column;
         gap: 0;
     }
+    .jobApplicationParent {
+        padding: 40px 16px;
+    }
+    .jobApplicationParent .container{
+        padding: 0;
+    }
+    .jobApplicationParent .pagePartitionLeft{
+        margin-bottom: 10px;
+    }
+    .jobApplicationParent .pagePartitionLeft span{
+        margin-bottom: 14px;
+    }
+    .jobApplicationParent .pagePartitionLeft .Image_divParent{
+        max-width: 160px;
+        max-height: 160px;
+    }
+    .jobApplicationParent .useResume{
+        font-size: 12px;
+    }
 }
