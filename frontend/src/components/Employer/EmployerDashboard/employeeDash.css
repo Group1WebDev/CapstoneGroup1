@@ -259,6 +259,12 @@
     border-radius: 5px;
 }
 
+.input_parent.vacancies{
+    display: flex;
+    flex-direction: column;
+    max-width: 20%;
+}
+
 .jobPostPage .oneline_input .language_selection input {
     margin-right: 10px;
 }
@@ -472,6 +478,14 @@ button.cancel_button {
     overflow-x: auto;
 }
 
+span.error {
+    color: red;
+    font-size: 12px;
+}
+.error.salaryError {
+    margin-top:20px
+}
+
 
 
 
@@ -609,6 +623,9 @@ button.cancel_button {
     .profilePage .img_prnt{
         margin: 0;
     }
+    .input_parent.vacancies{
+        max-width:30%
+    }
 }
 
 @media (max-width: 480px) {
@@ -640,5 +657,8 @@ button.cancel_button {
     }
     .dashboard_parent{
         padding-top: 80px;
+    }
+    .input_parent.vacancies{
+        max-width: 100%;
     }
 }

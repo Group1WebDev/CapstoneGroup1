@@ -29,6 +29,26 @@ body {
   cursor: pointer;
 }
 
+.ReactModal__Overlay {
+  z-index: 999999 !important;
+  background-color: rgb(101 101 101 / 75%) !important;
+}
+
+.btn-small {
+  font-size: 14px;
+  margin-top: 14px;
+  width: fit-content;
+}
+
+.ReactModal__Content {
+  height: fit-content;
+  max-width: 408px;
+  width: 100%;
+  padding: 34px !important;
+  transform: translate(-50%, -50%) !important;
+  top: 50% !important;
+  left: 50% !important;
+}
 .d-none {
   display: none;
 }

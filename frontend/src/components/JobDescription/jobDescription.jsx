@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './jobDescription.css';
 import CustomLoadFunction from '../CustomLoader/customLoader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
