@@ -7,12 +7,12 @@ const jobPostingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  posted_by:{
-    type:mongoose.Schema.Types.ObjectId,ref:"User"
+  posted_by: {
+    type: mongoose.Schema.Types.ObjectId, ref: "User"
   },
   jobCategory: {
     type: String,
-    enum: ['Web Developer', 'Web Designer', 'Content Writer'],
+    enum: ['technology', 'finance', 'marketing', 'food', 'construction', 'other'],
     required: true,
   },
   jobType: {
@@ -69,19 +69,19 @@ const jobPostingSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  applied_by:[
+  applied_by: [
     {
-      userId:{type:mongoose.Schema.Types.ObjectId,ref:"User"},
+      userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       expYears: {
         type: Number,
       },
       resume: {
         type: String,
-       
+
       },
       coverLetter: {
         type: String,
-       
+
       }
     }
   ]

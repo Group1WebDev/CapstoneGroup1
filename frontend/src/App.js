@@ -25,6 +25,10 @@ import { AddProfileDetails } from './components/Profile/addProfileDetails.jsx';
 import JobsPosted from './components/Employer/JobsPostedEmployer/jobsListEmployer.jsx';
 import { JobApplication } from './components/JobApplication/jobApplication.jsx';
 import CandidatesList from './components/Employer/CandidatesList/candidates.jsx';
+<<<<<<< HEAD
+=======
+import ResumeBuilder from './components/ResumeBuilder/resumeBuilder';
+>>>>>>> 4a3150cf528fb8cbc4d0b797100c2069c458a535
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -167,8 +171,15 @@ function RouteMain() {
             </Layout>
           }
         /> */}
-
-
+        <Route path='/userProfile' element={<Layout>{userDetails?.userDesignation == null ? <AddProfileDetails /> : <ProfilePage />}</Layout>} />
+        <Route
+          path='/resume-builder'
+          element={
+            <Layout>
+              <ResumeBuilder />
+            </Layout>
+          }
+        />
         <Route
           path='/jobApplication/:id'
           element={

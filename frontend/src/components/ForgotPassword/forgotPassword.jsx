@@ -4,6 +4,7 @@ import forgotImage from '../../images/forgotScreen.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import CustomLoadFunction from '../CustomLoader/customLoader';
 
 function ForgotPasswordScreen() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function ForgotPasswordScreen() {
 
   const [newPassVisible, setNewPassVisible] = useState(false);
   const [confPassVisible, setConfPassVisible] = useState(false);
+  const [responseLoading, setResponseLoading] = useState(false);
 
 
   const togglenewPassVisibile = () => {
@@ -24,9 +26,10 @@ function ForgotPasswordScreen() {
     setConfPassVisible(!confPassVisible);
   };
 
-  
+
   const handleOtpRequest = async (e) => {
     e.preventDefault();
+    setResponseLoading(true);
     try {
       const response = await fetch('http://localhost:5001/generateOTP', {
         method: 'POST',
@@ -40,18 +43,24 @@ function ForgotPasswordScreen() {
       if (response.ok) {
         alert('OTP sent');
         setOtpSent(true);
+        setResponseLoading(false);
       } else {
         alert(`err ${responseData.error}`);
+        setResponseLoading(false);
       }
     } catch (error) {
       console.error('err:', error);
+      setResponseLoading(false);
     }
+
   };
 
   const handleSubmitForgotScreen = async (e) => {
     e.preventDefault();
+    setResponseLoading(true);
     if (newPass !== confPass) {
       alert('Confirm Password and new password should be same');
+      setResponseLoading(false);
       return;
     }
     try {
@@ -67,12 +76,15 @@ function ForgotPasswordScreen() {
       if (response.ok) {
         alert('New Password is updated successfully');
         navigate('/login');
+        setResponseLoading(false);
       } else {
         console.error('err in creating password:', responseData);
         alert(`err in password updating: ${responseData.error}`);
+        setResponseLoading(false);
       }
     } catch (error) {
       console.error('Error:', error);
+      setResponseLoading(false);
     }
   };
 
@@ -85,55 +97,61 @@ function ForgotPasswordScreen() {
   }, []);
 
   return (
-    <div className='forgotPageParent'>
-      <div className='forgot_leftZone'>
-        <img src={forgotImage} alt='Background image for forgot screen' />
-      </div>
-      <div className='forgot_righZone'>
-        <h1>Forgot Password</h1>
-        <p>Reset your password by entering current password and new password.</p>
-
-        <form onSubmit={handleOtpRequest} style={{ display: otpSent ? 'none' : 'block' }}>
-          <div className='input_parent'>
-            <label>Email</label>
-            <div className=''>
-              <input type='email' value={userEmail} onChange={(e) => setUserEmail(e.target.value)} required />
-            </div>
+    <>
+      {responseLoading ? (
+        <CustomLoadFunction />
+      ) : (
+        <div className='forgotPageParent'>
+          <div className='forgot_leftZone'>
+            <img src={forgotImage} alt='Background image for forgot screen' />
           </div>
-          <div className='submit_parent'>
-            <button type='submit'>Send OTP</button>
-          </div>
-        </form>
+          <div className='forgot_righZone'>
+            <h1>Forgot Password</h1>
+            <p>Reset your password by verifying otp on your email.</p>
 
-        {otpSent && (
-          <form onSubmit={handleSubmitForgotScreen}>
-            <div className='input_parent'>
-              <label>OTP</label>
-              <div className='input_eye'>
-                <input type='text' className='otp_input' value={otp} onChange={(e) => setOtp(e.target.value)} required />
+            <form onSubmit={handleOtpRequest} style={{ display: otpSent ? 'none' : 'block' }}>
+              <div className='input_parent'>
+                <label>Email</label>
+                <div className=''>
+                  <input type='email' value={userEmail} onChange={(e) => setUserEmail(e.target.value)} required />
+                </div>
               </div>
-            </div>
-            <div className='input_parent'>
-              <label>New Password</label>
-              <div className='input_eye'>
-                <input type={newPassVisible ? 'text' : 'password'} className='new_pass' value={newPass} onChange={(e) => setNewPass(e.target.value)} required />
-                <FontAwesomeIcon icon={newPassVisible ? faEyeSlash : faEye} onClick={togglenewPassVisibile} className='fontIcon' />
+              <div className='submit_parent'>
+                <button type='submit'>Send OTP</button>
               </div>
-            </div>
-            <div className='input_parent'>
-              <label>Confirm New Password</label>
-              <div className='input_eye'>
-                <input type={confPassVisible ? 'text' : 'password'} className='confirm_pass' value={confPass} onChange={(e) => setConfPass(e.target.value)} required />
-                <FontAwesomeIcon icon={confPassVisible ? faEyeSlash : faEye} onClick={toggleconfPassVisibile} className='fontIcon' />
-              </div>
-            </div>
-            <div className='submit_parent'>
-              <button>Submit</button>
-            </div>
-          </form>
-        )}
-      </div>
-    </div>
+            </form>
+
+            {otpSent && (
+              <form onSubmit={handleSubmitForgotScreen}>
+                <div className='input_parent'>
+                  <label>OTP</label>
+                  <div className='input_eye'>
+                    <input type='text' className='otp_input' value={otp} onChange={(e) => setOtp(e.target.value)} required />
+                  </div>
+                </div>
+                <div className='input_parent'>
+                  <label>New Password</label>
+                  <div className='input_eye'>
+                    <input type={newPassVisible ? 'text' : 'password'} className='new_pass' value={newPass} onChange={(e) => setNewPass(e.target.value)} required />
+                    <FontAwesomeIcon icon={newPassVisible ? faEyeSlash : faEye} onClick={togglenewPassVisibile} className='fontIcon' />
+                  </div>
+                </div>
+                <div className='input_parent'>
+                  <label>Confirm New Password</label>
+                  <div className='input_eye'>
+                    <input type={confPassVisible ? 'text' : 'password'} className='confirm_pass' value={confPass} onChange={(e) => setConfPass(e.target.value)} required />
+                    <FontAwesomeIcon icon={confPassVisible ? faEyeSlash : faEye} onClick={toggleconfPassVisibile} className='fontIcon' />
+                  </div>
+                </div>
+                <div className='submit_parent'>
+                  <button>Submit</button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

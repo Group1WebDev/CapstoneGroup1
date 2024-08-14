@@ -58,6 +58,11 @@ function Header() {
                   </NavLink>
                 </li>
                 <li>
+                  <NavLink activeclassname='is-active' to='/resume-builder'>
+                    Resume Builder
+                  </NavLink>
+                </li>
+                <li>
                   <NavLink activeclassname='is-active' to='/userProfile'>
                     Profile
                   </NavLink>
