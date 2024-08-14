@@ -4,6 +4,7 @@ import './resumeStyle.scss';
 import $ from 'jquery';
 import { Controller, useForm, useFieldArray } from 'react-hook-form';
 import ReactQuill from 'react-quill';
+
 import 'react-quill/dist/quill.snow.css';
 import Parser from 'html-react-parser';
 import Modal from 'react-modal';
@@ -44,6 +45,25 @@ const ResumeBuilder = () => {
     control,
     name: 'work_experience',
   });
+
+  async function createAndOpenPDF() {
+    try {
+      const response = await fetch('http://localhost:5001/create-pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(getValues()),
+      });
+
+      if (!response.ok) {
+        throw new Error('err creating pdf');
+      }
+      window.open('http://localhost:5001/get-resume', '_blank');
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const [openModalId, setOpenModalId] = useState(null);
 
@@ -450,6 +470,7 @@ const ResumeBuilder = () => {
               <div>{watch().key_skills && Parser(watch().key_skills)}</div>
             </div>
           </div>
+          <button onClick={createAndOpenPDF}>Download</button>
         </div>
       </div>
     </div>
