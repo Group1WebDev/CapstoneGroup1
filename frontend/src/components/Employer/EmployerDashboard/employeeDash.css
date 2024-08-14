@@ -489,6 +489,11 @@ button.cancel_button {
     background-color: var(--secondaryDark-color);
 }
 
+.nodataTd{
+    text-align: center;
+    width: 100%;
+}
+
 
 @media (max-width: 1200px) {}
 

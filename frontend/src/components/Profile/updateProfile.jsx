@@ -4,6 +4,7 @@ import { useAuth } from '../../useToken';
 import userImg from '../../images/user_icon.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import CustomLoadFunction from '../CustomLoader/customLoader';
 
 function ProfilePage() {
   let user = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -21,6 +22,7 @@ function ProfilePage() {
   const [userProfilePic, setUserProfilePic] = useState(userImg);
   const [userEduDetail, setUserEduDetail] = useState({});
   const [userExperience, setUserExperience] = useState([]);
+  const [responseLoading, setResponseLoading] = useState(false);
 
   const handleEditIconClick = () => {
     setUserEditing(!isUserEditing);
@@ -34,6 +36,7 @@ function ProfilePage() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        setResponseLoading(true);
         const response = await fetch(`http://localhost:5001/get_Userprofile/${user.user.id}`);
         const data = await response.json();
         const userData = data.data;
@@ -55,8 +58,10 @@ function ProfilePage() {
         setUserEduDetail(userData.userEducation);
         setUserExperience(userData.userExp);
       } catch (error) {
+        setResponseLoading(false);
         console.error('Error fetching user data:', error);
       }
+      setResponseLoading(false);
     };
 
     fetchUserData();

@@ -31,8 +31,15 @@
 
 .jobDescriptionParent .banner_section .companyHead {
     display: flex;
-    align-items: center;
-    gap: 30px;
+    gap: 20px;
+    flex-direction: column;
+}
+.jobDescriptionParent .banner_section .jobLocation {
+    color: #fff;
+    opacity: 0.7;
+}
+.jobDescriptionParent .banner_section .iconLoc{
+    margin-right: 5px;
 }
 
 .jobDescriptionParent .banner_section .companyHead img {
