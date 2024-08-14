@@ -35,3 +35,17 @@ Then run
 ```bash
   npm start
 ```
+
+## 🔗 Links
+
+## Frontend live url
+
+```bash
+  https://capstone-group-1.netlify.app/
+```
+
+## Backend live url
+
+```bash
+  https://group-1-capstone.onrender.com/
+```

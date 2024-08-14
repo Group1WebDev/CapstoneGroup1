@@ -30,6 +30,9 @@ const upload = multer({ storage });
 // app.post('/', upload.single('image'), 'RouteName');
 
 // Routes
+router.post('/', (req, res) => {
+  res.status(400).json({ message: 'test' });
+});
 router.post('/userRegister', userRegister);
 router.post('/login', login);
 router.get('/get_Userprofile/:id', updateProfile.getUserProfile);
