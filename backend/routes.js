@@ -30,7 +30,7 @@ const upload = multer({ storage });
 // app.post('/', upload.single('image'), 'RouteName');
 
 // Routes
-router.post('/', (req, res) => {
+router.get('/', (req, res) => {
   res.status(400).json({ message: 'test' });
 });
 router.post('/userRegister', userRegister);
