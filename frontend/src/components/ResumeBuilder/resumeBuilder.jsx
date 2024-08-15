@@ -117,8 +117,15 @@ const ResumeBuilder = () => {
   useEffect(() => {
     if (infoCard > 1) {
       $('.backBtn').css('display', 'block');
+
+      // $('.nextBtn').css('display', 'block');
     } else {
       $('.backBtn').css('display', 'none');
+    }
+    if (infoCard > 5) {
+      $('.nextBtn').css('display', 'none');
+    } else {
+      $('.nextBtn').css('display', 'block');
     }
   });
 
@@ -164,9 +171,9 @@ const ResumeBuilder = () => {
     setInfoCard((prevInfoCard) => {
       const nextCard = prevInfoCard + 1;
 
-      if (nextCard > 5) {
-        return prevInfoCard;
-      }
+      // if (nextCard > 5) {
+      //   return prevInfoCard;
+      // }
 
       $(`.card`).addClass('d-none');
       $(`.card_${nextCard}`).removeClass('d-none');
@@ -199,7 +206,7 @@ const ResumeBuilder = () => {
               </button>
             </div>
             <div className='next'>
-              <button className='btn btn-primary' onClick={changeCardNext}>
+              <button className='btn btn-primary nextBtn' onClick={changeCardNext}>
                 Next
               </button>
             </div>
@@ -490,6 +497,20 @@ const ResumeBuilder = () => {
               <div className='col col-12 errorMessage'>Please fill in all required fields before submitting.</div>
             </div>
           </div>
+          <div className='card card_6 d-none'>
+            <div className='title'>
+              <h1>Final Step</h1>
+              <p>You are almost there! Download your completed resume to get started on your next opportunity.</p>
+            </div>
+
+            <div className='row'>
+              <div className='col col-12'>
+                <button className='btn btn-primary downloadBtn' onClick={createAndOpenPDF}>
+                  Download Your Resume
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className='output d-flex-justify-center'>
@@ -529,7 +550,6 @@ const ResumeBuilder = () => {
               <div>{watch().key_skills && Parser(watch().key_skills)}</div>
             </div>
           </div>
-          <button onClick={createAndOpenPDF}>Download</button>
         </div>
       </div>
     </div>
