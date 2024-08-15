@@ -82,11 +82,11 @@ function AddNewJob() {
       city: exactLocation.city,
       province: exactLocation.province,
       country: exactLocation.country,
-      posted_by: user?.user.id
+      posted_by: user?.user.id,
     };
 
     try {
-      const response = await fetch('http://localhost:5001/jobs', {
+      const response = await fetch('https://group-1-capstone.onrender.com/jobs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

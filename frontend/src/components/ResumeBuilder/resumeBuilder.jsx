@@ -4,8 +4,12 @@ import './resumeStyle.scss';
 import $ from 'jquery';
 import { Controller, useForm, useFieldArray } from 'react-hook-form';
 import ReactQuill from 'react-quill';
+
 import 'react-quill/dist/quill.snow.css';
 import Parser from 'html-react-parser';
+import Modal from 'react-modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 const ResumeBuilder = () => {
   const { register, getValues, handleSubmit, watch, control, setValue } = useForm({
@@ -29,7 +33,7 @@ const ResumeBuilder = () => {
           work_summary: `<ul><li>Developed Lanceark, a robust keyword-tracking web application tailored for digital marketing agencies.</li><li>Designed to track client data and monitor content management systems efficiently.</li><li>Implemented accurate keyword tracking and analysis, empowering agencies to make informed, data-driven decisions.</li><li>Collaborated closely with team members to gather feedback and iteratively improve the application's functionality and user experience.</li><li>Allows automated social media posting, enhancing overall marketing efficiency and effectiveness.</li></ul>`,
         },
       ],
-      education: [{ school_name: 'Atharva Institute of Information Technology', degree: 'B.S', school_location: 'Mumbai, IN', field_of_study: 'Computer Application', start_date: '', end_date: '', description: '<ul><li> <b>Relevant Coursework:</b> Database, Application Development, Search Engine Optimization, Software Design and Development.</li></ul>' }],
+      education: [{ school_name: 'Atharva Institute of Information Technology', degree: 'B.S Computer Application', school_location: 'Mumbai, IN', start_date: '', end_date: '', description: '<ul><li> <b>Relevant Coursework:</b> Database, Application Development, Search Engine Optimization, Software Design and Development.</li></ul>' }],
       key_skills: '<ul><li>ReactJS, VueJs</li><li>UIKIT, Bootstrap, CSS, SASS</li><li>NodeJS, Express.js</li><li>PHP, Laravel, Java</li></ul>',
     },
   });
@@ -41,6 +45,63 @@ const ResumeBuilder = () => {
     control,
     name: 'work_experience',
   });
+
+  async function createAndOpenPDF() {
+    try {
+      const response = await fetch('https://group-1-capstone.onrender.com/create-pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(getValues()),
+      });
+
+      if (!response.ok) {
+        throw new Error('err creating pdf');
+      }
+      window.open('https://group-1-capstone.onrender.com/get-resume', '_blank');
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const [openModalId, setOpenModalId] = useState(null);
+
+  const openModal = (id) => {
+    setOpenModalId(id);
+  };
+
+  const closeModal = () => {
+    setOpenModalId(null);
+  };
+
+  const handleQuillChange = (name, value) => {
+    setValue(name, value);
+  };
+
+  const geminiApi = async (data) => {
+    try {
+      const response = await fetch('https://group-1-capstone.onrender.com/gemini-res', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        console.log('err in submitting');
+      }
+
+      const result = await response.json();
+      var output = result.output.replace('```html', '');
+      output = output.replace('```', '');
+      handleQuillChange(data.push_output, output);
+      setOpenModalId(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const {
     fields: educationFields,
@@ -147,9 +208,30 @@ const ResumeBuilder = () => {
             <div className='row'>
               <div className='col col-12'>
                 <div className='form-group'>
-                  <label>Professional Summary</label>
+                  <label>
+                    Professional Summary <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faCircleInfo} onClick={() => openModal('professional_summary')} />
+                  </label>
 
-                  <Controller name='professional_summary' control={control} render={({ field }) => <ReactQuill {...field} theme='snow' onChange={(value) => setValue('professional_summary', value)} />} />
+                  <Modal isOpen={openModalId === 'professional_summary'} onRequestClose={closeModal}>
+                    <div className='form-group'>
+                      <label>Professional Summary</label>
+                      <textarea {...register(`professional_summary_gemini`)} name={`professional_summary_gemini`} style={{ width: '100%' }} rows='6' placeholder='Write your key responsibilities, achievements, and skills.'></textarea>
+                      <button
+                        className='btn btn-primary btn-small'
+                        onClick={() =>
+                          geminiApi({
+                            prompt: watch().professional_summary_gemini,
+                            type: 'professional_summary',
+                            push_output: `professional_summary`,
+                          })
+                        }
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </Modal>
+
+                  <Controller name='professional_summary' control={control} render={({ field }) => <ReactQuill {...field} theme='snow' onChange={(value) => handleQuillChange('professional_summary', value)} />} />
 
                   {/* <textarea rows={5} {...register('professional_summary')} name='professional_summary' /> */}
                 </div>
@@ -204,9 +286,31 @@ const ResumeBuilder = () => {
                     </div>
                     <div className='col col-12'>
                       <div className='form-group'>
-                        <label>Work Summary</label>
+                        <label>
+                          Work Summary <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faCircleInfo} onClick={() => openModal(index + 'workSummary')} />
+                        </label>
 
-                        <Controller name={`work_experience.${index}.work_summary`} control={control} render={({ field }) => <ReactQuill {...field} theme='snow' onChange={(value) => setValue(`work_experience.${index}.work_summary`, value)} />} />
+                        <Modal isOpen={openModalId === index + 'workSummary'} onRequestClose={closeModal}>
+                          <div className='form-group'>
+                            <label>Work summary {`${watch().work_experience[index].position_title && 'for ' + watch().work_experience[index].position_title}`}</label>
+                            <textarea {...register(`work_experience.${index}.work_summary_gemini`)} name={`work_experience.${index}.work_summary_gemini`} style={{ width: '100%' }} rows='6' placeholder='Write your key responsibilities, achievements, and skills.'></textarea>
+                            <button
+                              className='btn btn-primary btn-small'
+                              onClick={() =>
+                                geminiApi({
+                                  prompt: watch().work_experience[index].work_summary_gemini,
+                                  type: 'work_summary',
+                                  title: watch().work_experience[index].position_title,
+                                  push_output: `work_experience.${index}.work_summary`,
+                                })
+                              }
+                            >
+                              Submit
+                            </button>
+                          </div>
+                        </Modal>
+
+                        <Controller name={`work_experience.${index}.work_summary`} control={control} render={({ field }) => <ReactQuill {...field} theme='snow' onChange={(value) => handleQuillChange(`work_experience.${index}.work_summary`, value)} />} />
 
                         {/* <textarea rows={5} {...register(`work_experience.${index}.work_summary`)} name='work_summary' /> */}
                       </div>
@@ -299,8 +403,30 @@ const ResumeBuilder = () => {
             <div className='row'>
               <div className='col col-12'>
                 <div className='form-group'>
-                  <label>Key Skills</label>
-                  <Controller name='key_skills' control={control} render={({ field }) => <ReactQuill {...field} theme='snow' onChange={(value) => setValue('key_skills', value)} />} />
+                  <label>
+                    Key Skills <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faCircleInfo} onClick={() => openModal('key_skills')} />
+                  </label>
+
+                  <Modal isOpen={openModalId === 'key_skills'} onRequestClose={closeModal}>
+                    <div className='form-group'>
+                      <label>Key Skills</label>
+                      <textarea {...register(`key_skills_gemini`)} name={`key_skills_gemini`} style={{ width: '100%' }} rows='6' placeholder='Write your key responsibilities, achievements, and skills.'></textarea>
+                      <button
+                        className='btn btn-primary btn-small'
+                        onClick={() =>
+                          geminiApi({
+                            prompt: watch().key_skills_gemini,
+                            type: 'key_skills',
+                            push_output: `key_skills`,
+                          })
+                        }
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </Modal>
+
+                  <Controller name='key_skills' control={control} render={({ field }) => <ReactQuill {...field} theme='snow' onChange={(value) => handleQuillChange('key_skills', value)} />} />
                 </div>
               </div>
             </div>
@@ -333,7 +459,7 @@ const ResumeBuilder = () => {
             <div className='section_title'>Education</div>
             {watch().education?.map((data, index) => (
               <div className='section-loop' key={index}>
-                <div>{Parser(`<b>${data.school_name}, ${data.degree} ${data.field_of_study}</b> | ${data.school_location}`)}</div>
+                <div>{Parser(`<b>${data.school_name}, ${data.degree}</b> | ${data.school_location}`)}</div>
                 <div>{data.description && Parser(data.description)}</div>
               </div>
             ))}
@@ -344,6 +470,7 @@ const ResumeBuilder = () => {
               <div>{watch().key_skills && Parser(watch().key_skills)}</div>
             </div>
           </div>
+          <button onClick={createAndOpenPDF}>Download</button>
         </div>
       </div>
     </div>
