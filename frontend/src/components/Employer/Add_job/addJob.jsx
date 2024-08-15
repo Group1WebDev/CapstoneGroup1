@@ -9,6 +9,64 @@ function AddNewJob() {
   const [locationSelected, setLocationSelected] = useState(null);
   const navigate = useNavigate();
 
+  const [jobPostErrors, setJobPostErrors] = useState({});
+
+  const jobPostValidations = () => {
+    const errors = {};
+    const regexCheck = /[^a-zA-Z\s]/;
+
+    if (!formValues.jobTitle) {
+      errors.jobTitle = 'Job title can not be empty';
+    } else if (formValues.jobTitle.length < 4) {
+      errors.jobTitle = 'Minimum 4 character are required for Job title';
+    } else if (regexCheck.test(formValues.jobTitle)) {
+      errors.jobTitle = 'Job title must be text only';
+    } else if (formValues.jobTitle.length > 50) {
+      errors.jobTitle = 'Job title must be less than 50 chars';
+    }
+
+    if (!formValues.jobCategory) {
+      errors.jobCategory = 'Job category selection required';
+    }
+
+    if (!formValues.jobType) {
+      errors.jobType = 'Job type selection required';
+    }
+
+    if (!formValues.experienceLevel) {
+      errors.experienceLevel = 'Experience level selection required';
+    }
+
+    if (maxSalary < 10000) {
+      errors.salary = 'Maximum salary selection should be more than 10000$';
+    } else if (minSalary > maxSalary) {
+      errors.salary = 'Min salary must be smaller than Max salary';
+    }
+
+    if (languageSelected.length === 0) {
+      errors.languageSelection = 'Please select language required';
+    }
+
+    if (!formValues.jobDescription) {
+      errors.jobDescription = 'Job description is required';
+    } else if (formValues.jobDescription.length < 100) {
+      errors.jobDescription = 'Job Description should be more than 100 chars';
+    }
+
+
+    if (!formValues.jobVacancies) {
+      errors.jobVacancies = 'Please select Job Vacancies';
+    } else if (formValues.jobVacancies < 1) {
+      errors.jobVacancies = 'Job vacancies cannot be in minus or zero';
+    }
+    if (!exactLocation.addressLine1 || !exactLocation.city || !exactLocation.province || !exactLocation.country) {
+      errors.location = 'Please select a valid location';
+    }
+
+    setJobPostErrors(errors);
+    return Object.keys(errors).length === 0;
+  }
+
   const [exactLocation, setExactLocation] = useState({
     addressLine1: '',
     city: '',
@@ -67,39 +125,44 @@ function AddNewJob() {
       [name]: value,
     });
   };
-  let user= JSON.parse(sessionStorage.getItem('userInfo'))
+  let user = JSON.parse(sessionStorage.getItem('userInfo'))
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const jobData = {
-      ...formValues,
-      minSalary,
-      maxSalary,
-      languageRequirement: languageSelected,
-      addressLine: exactLocation.addressLine1,
-      city: exactLocation.city,
-      province: exactLocation.province,
-      country: exactLocation.country,
-      posted_by:user?.user.id
-    };
+    if (jobPostValidations()) {
+      const jobData = {
+        ...formValues,
+        minSalary,
+        maxSalary,
+        languageRequirement: languageSelected,
+        addressLine: exactLocation.addressLine1,
+        city: exactLocation.city,
+        province: exactLocation.province,
+        country: exactLocation.country,
+        posted_by: user?.user.id
+      };
 
-    try {
-      const response = await fetch('http://localhost:5001/jobs', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(jobData),
-      });
+      try {
+        const response = await fetch('http://localhost:5001/jobs', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(jobData),
+        });
 
-      if (!response.ok) {
-        console.log('ERR 93');
+        if (!response.ok) {
+          console.log('ERR 93');
+          setResponseLoading(false);
+        }
+
+        const result = await response.json();
+        console.log('posting created:', result);
+        navigate('/employer/dashboard');
+        setResponseLoading(false);
+      } catch (error) {
+        console.error('err creating job posting:', error);
+        alert('Error in creating job post. Please try again')
       }
-
-      const result = await response.json();
-      console.log('posting created:', result);
-      navigate('/employer/dashboard');
-    } catch (error) {
-      console.error('err creating job posting:', error);
     }
   };
 
@@ -112,6 +175,7 @@ function AddNewJob() {
             <div className='input_parent'>
               <label>Job Title:</label>
               <input type='text' name='jobTitle' value={formValues.jobTitle} onChange={handleChange} />
+              {jobPostErrors.jobTitle && <span className='error'>{jobPostErrors.jobTitle}</span>}
             </div>
             <div className='input_parent'>
               <label>Job Category:</label>
@@ -119,10 +183,14 @@ function AddNewJob() {
                 <option value='' disabled>
                   Select Job Category
                 </option>
-                <option value='Web Developer'>Web Developer</option>
-                <option value='Web Designer'>Web Designer</option>
-                <option value='Content Writer'>Content Writer</option>
+                <option value='technology'>Tech</option>
+                <option value='finance'>Finance</option>
+                <option value='marketing'>Marketing</option>
+                <option value='food'>Food</option>
+                <option value='construction'>Construction</option>
+                <option value='construction'>Other</option>
               </select>
+              {jobPostErrors.jobCategory && <span className='error'>{jobPostErrors.jobCategory}</span>}
             </div>
           </div>
           <div className='oneline_input'>
@@ -135,6 +203,7 @@ function AddNewJob() {
                 <option value='Part-Time'>Part-Time</option>
                 <option value='Full-Time'>Full-Time</option>
               </select>
+              {jobPostErrors.jobType && <span className='error'>{jobPostErrors.jobType}</span>}
             </div>
             <div className='input_parent'>
               <label>Experience Level</label>
@@ -146,12 +215,14 @@ function AddNewJob() {
                 <option value='Intermediate'>Intermediate</option>
                 <option value='Expert'>Expert</option>
               </select>
+              {jobPostErrors.experienceLevel && <span className='error'>{jobPostErrors.experienceLevel}</span>}
             </div>
           </div>
           <div className='oneline_input'>
             <div className='input_parent'>
               <label>Salary Range (per annum)</label>
               <MultiRangeSlider min={0} max={500000} step={100} minValue={minSalary} maxValue={maxSalary} ruler={false} label={true} onInput={handleSliderInput} />
+              {jobPostErrors.salary && <span className='error salaryError'>{jobPostErrors.salary}</span>}
             </div>
             <div className='input_parent'>
               <label>Language Requirement</label>
@@ -169,13 +240,16 @@ function AddNewJob() {
                   French
                 </div>
               </div>
+              {jobPostErrors.languageSelection && <span className='error'>{jobPostErrors.languageSelection}</span>}
               <div className='result'>Selected languages: {languageSelected.join(', ')}</div>
             </div>
           </div>
           <div className='oneline_input'>
             <div className='input_parent'>
               <label>Job Description</label>
-              <textarea cols='4' rows='12' name='jobDescription' value={formValues.jobDescription} onChange={handleChange} />
+              <textarea cols='4' rows='12' name='jobDescription' value={formValues.jobDescription}
+                onChange={handleChange} />
+              {jobPostErrors.jobDescription && <span className='error'>{jobPostErrors.jobDescription}</span>}
             </div>
           </div>
           <h2>Job Location Details</h2>
@@ -192,6 +266,7 @@ function AddNewJob() {
                 },
               }}
             />
+            {jobPostErrors.location && <span className='error'>{jobPostErrors.location}</span>}
           </div>
           <div className='oneline_input'>
             <div className='input_parent'>
@@ -212,9 +287,10 @@ function AddNewJob() {
             </div>
           </div>
           <div>
-            <div className='input_parent'>
+            <div className='input_parent vacancies'>
               <label>Total Vacancies</label>
               <input type='number' name='jobVacancies' value={formValues.jobVacancies} onChange={handleChange} />
+              {jobPostErrors.jobVacancies && <span className='error'>{jobPostErrors.jobVacancies}</span>}
             </div>
           </div>
           <div className='submit_btn'>

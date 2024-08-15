@@ -291,6 +291,18 @@
 .jobPostPage .input_parent .google_autocomplete{
     margin-bottom: 5px;
 }
+.input_parent.vacancies{
+    display: flex;
+    flex-direction: column;
+    max-width: 20%;
+}
+span.error {
+    color: red;
+    font-size: 12px;
+}
+.error.salaryError {
+    margin-top:20px
+}
 
 
 
