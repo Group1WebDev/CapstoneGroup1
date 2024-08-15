@@ -124,6 +124,7 @@ const ResumeBuilder = () => {
 
   const changeCardNext = () => {
     const currentCardIndex = infoCard;
+    var nextCard = 1;
 
     let checkValueIsValid = true;
 
@@ -137,6 +138,8 @@ const ResumeBuilder = () => {
         email: getValues('email'),
       };
       checkValueIsValid = Object.values(requiredCard1Data).every((field) => field);
+
+      console.log(nextCard);
     } else if (currentCardIndex === 2) {
       const professionalSummary = getValues('professional_summary');
       checkValueIsValid = professionalSummary && professionalSummary.trim() !== '<p><br></p>';
@@ -160,8 +163,14 @@ const ResumeBuilder = () => {
 
     setInfoCard((prevInfoCard) => {
       const nextCard = prevInfoCard + 1;
-      $('.card').addClass('d-none');
+
+      if (nextCard > 5) {
+        return prevInfoCard;
+      }
+
+      $(`.card`).addClass('d-none');
       $(`.card_${nextCard}`).removeClass('d-none');
+
       return nextCard;
     });
   };
@@ -169,8 +178,12 @@ const ResumeBuilder = () => {
   const changeCardBack = () => {
     setInfoCard((prevInfoCard) => {
       const backCard = prevInfoCard - 1;
-      $('.card').css('display', 'none');
-      $(`.card_${backCard}`).css('display', 'block');
+      if (backCard < 1) {
+        return prevInfoCard;
+      }
+      $('.card').addClass('d-none');
+      $(`.card_${backCard}`).removeClass('d-none');
+
       return backCard;
     });
   };
