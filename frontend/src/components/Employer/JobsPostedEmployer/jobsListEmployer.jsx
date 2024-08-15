@@ -70,7 +70,7 @@ export default function JobsPosted() {
             <h1>Jobs Posted</h1>
             <br /><br />
             <table id="candidates_tb">
-              <tr key={job._id}>
+              <tr>
                 <th>Job Title</th>
                 <th>Candidates Applied</th>
                 <th>Vacancies</th>
@@ -78,7 +78,7 @@ export default function JobsPosted() {
                 <th>Action</th>
               </tr>
               {jobs.length !== 0 && jobs.map((job) =>
-                <tr>
+                <tr key={job._id}>
                   <td>{job.jobTitle}</td>
                   <td>{job.jobApplications}</td>
                   <td>{job.jobVacancies} Vacancies</td>

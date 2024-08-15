@@ -1,10 +1,12 @@
 const User = require('../models/userModel');
+const bcrypt = require('bcrypt');
+
 const updateProfile = async (req, res) => {
   const { id } = req.params;
   const { userDesignation, userSkills, locDetail, bio, gender, userEducation, userExp } = req.body;
 
   if (req.file) {
-    profilePicUrl = 'http://localhost:5001/profiles/' + req.file.filename;
+    profilePicUrl = 'https://group-1-capstone.onrender.com/profiles/' + req.file.filename;
   }
 
   try {
@@ -27,4 +29,35 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-module.exports = { updateProfile, getUserProfile };
+const changePassword = async (req, res) => {
+  try {
+    const { userId, oldPassword, newPassword } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).json({ success: false, message: 'user not found' });
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ success: false, message: 'old password is incorrect' });
+    }
+
+    const samePassword = await bcrypt.compare(newPassword, user.password);
+    if (samePassword) {
+      return res.status(400).json({ success: false, message: 'new password is same' });
+    }
+
+    const saltBy10 = 10;
+    const updatedPasswordHashed = await bcrypt.hash(newPassword, saltBy10);
+
+    user.password = updatedPasswordHashed;
+    await user.save();
+
+    return res.status(200).json({ success: true, message: 'password changed' });
+  } catch (error) {
+    return res.status(400).json({ success: false, message: 'err changing password' });
+  }
+};
+
+module.exports = { updateProfile, getUserProfile, changePassword };
