@@ -4,8 +4,12 @@ import './resumeStyle.scss';
 import $ from 'jquery';
 import { Controller, useForm, useFieldArray } from 'react-hook-form';
 import ReactQuill from 'react-quill';
+
 import 'react-quill/dist/quill.snow.css';
 import Parser from 'html-react-parser';
+import Modal from 'react-modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 const ResumeBuilder = () => {
   const { register, getValues, handleSubmit, watch, control, setValue } = useForm({
@@ -41,6 +45,44 @@ const ResumeBuilder = () => {
     control,
     name: 'work_experience',
   });
+
+  const [openModalId, setOpenModalId] = useState(null);
+
+  const openModal = (id) => {
+    setOpenModalId(id);
+  };
+
+  const closeModal = () => {
+    setOpenModalId(null);
+  };
+
+  const handleQuillChange = (name, value) => {
+    setValue(name, value);
+  };
+
+  const geminiApi = async (data) => {
+    try {
+      const response = await fetch('https://group-1-capstone.onrender.com/gemini-res', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        console.log('err in submitting');
+      }
+
+      const result = await response.json();
+      var output = result.output.replace('```html', '');
+      output = output.replace('```', '');
+      handleQuillChange(data.push_output, output);
+      setOpenModalId(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const {
     fields: educationFields,
@@ -147,7 +189,28 @@ const ResumeBuilder = () => {
             <div className='row'>
               <div className='col col-12'>
                 <div className='form-group'>
-                  <label>Professional Summary</label>
+                  <label>
+                    Professional Summary* <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faCircleInfo} onClick={() => openModal('professional_summary')} />
+                  </label>
+
+                  <Modal isOpen={openModalId === 'professional_summary'} onRequestClose={closeModal}>
+                    <div className='form-group'>
+                      <label>Professional Summary</label>
+                      <textarea {...register(`professional_summary_gemini`)} name={`professional_summary_gemini`} style={{ width: '100%' }} rows='6' placeholder='Write your key responsibilities, achievements, and skills.'></textarea>
+                      <button
+                        className='btn btn-primary btn-small'
+                        onClick={() =>
+                          geminiApi({
+                            prompt: watch().professional_summary_gemini,
+                            type: 'professional_summary',
+                            push_output: `professional_summary`,
+                          })
+                        }
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </Modal>
 
                   <Controller name='professional_summary' control={control} render={({ field }) => <ReactQuill {...field} theme='snow' onChange={(value) => setValue('professional_summary', value)} />} />
 
@@ -204,7 +267,29 @@ const ResumeBuilder = () => {
                     </div>
                     <div className='col col-12'>
                       <div className='form-group'>
-                        <label>Work Summary</label>
+                        <label>
+                          Work Summary* <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faCircleInfo} onClick={() => openModal(index + 'workSummary')} />
+                        </label>
+
+                        <Modal isOpen={openModalId === index + 'workSummary'} onRequestClose={closeModal}>
+                          <div className='form-group'>
+                            <label>Work summary {`${watch().work_experience[index].position_title && 'for ' + watch().work_experience[index].position_title}`}</label>
+                            <textarea {...register(`work_experience.${index}.work_summary_gemini`)} name={`work_experience.${index}.work_summary_gemini`} style={{ width: '100%' }} rows='6' placeholder='Write your key responsibilities, achievements, and skills.'></textarea>
+                            <button
+                              className='btn btn-primary btn-small'
+                              onClick={() =>
+                                geminiApi({
+                                  prompt: watch().work_experience[index].work_summary_gemini,
+                                  type: 'work_summary',
+                                  title: watch().work_experience[index].position_title,
+                                  push_output: `work_experience.${index}.work_summary`,
+                                })
+                              }
+                            >
+                              Submit
+                            </button>
+                          </div>
+                        </Modal>
 
                         <Controller name={`work_experience.${index}.work_summary`} control={control} render={({ field }) => <ReactQuill {...field} theme='snow' onChange={(value) => setValue(`work_experience.${index}.work_summary`, value)} />} />
 
@@ -299,7 +384,28 @@ const ResumeBuilder = () => {
             <div className='row'>
               <div className='col col-12'>
                 <div className='form-group'>
-                  <label>Key Skills</label>
+                  <label>
+                    Key Skills* <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faCircleInfo} onClick={() => openModal('key_skills')} />
+                  </label>
+
+                  <Modal isOpen={openModalId === 'key_skills'} onRequestClose={closeModal}>
+                    <div className='form-group'>
+                      <label>Key Skills</label>
+                      <textarea {...register(`key_skills_gemini`)} name={`key_skills_gemini`} style={{ width: '100%' }} rows='6' placeholder='Write your key responsibilities, achievements, and skills.'></textarea>
+                      <button
+                        className='btn btn-primary btn-small'
+                        onClick={() =>
+                          geminiApi({
+                            prompt: watch().key_skills_gemini,
+                            type: 'key_skills',
+                            push_output: `key_skills`,
+                          })
+                        }
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </Modal>
                   <Controller name='key_skills' control={control} render={({ field }) => <ReactQuill {...field} theme='snow' onChange={(value) => setValue('key_skills', value)} />} />
                 </div>
               </div>
