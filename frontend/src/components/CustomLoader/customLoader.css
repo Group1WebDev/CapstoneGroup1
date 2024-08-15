@@ -1,0 +1,77 @@
+.loaderParent {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999999;
+}
+
+.loader {
+  width: 204px;
+  height: 10px;
+  border-radius: 5px;
+  position: relative;
+  background-color: #e5e5e5;
+  overflow: visible;
+}
+
+.loaderCircle {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  position: absolute;
+  left: 20px;
+  background: var(--primaryDark-color);
+  top: 50%;
+  transform: translateY(-50%);
+  animation: moveLoader 2s ease-in-out infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    left: 20px;
+  }
+
+  50% {
+    left: 184px;
+  }
+
+  100% {
+    left: 0px;
+  }
+
+  50% {
+    left: 184px;
+  }
+
+  0% {
+    left: 0px;
+  }
+}
+
+@keyframes moveLoader {
+  0% {
+    left: 20px;
+  }
+
+  50% {
+    left: 184px;
+  }
+
+  100% {
+    left: 0px;
+  }
+
+  50% {
+    left: 184px;
+  }
+
+  0% {
+    left: 0px;
+  }
+}
