@@ -4,14 +4,17 @@ import './resumeStyle.scss';
 import $ from 'jquery';
 import { Controller, useForm, useFieldArray } from 'react-hook-form';
 import ReactQuill from 'react-quill';
+import moment from 'moment';
 
 import 'react-quill/dist/quill.snow.css';
 import Parser from 'html-react-parser';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '../../useToken';
 
 const ResumeBuilder = () => {
+  const { token, userInfo } = useAuth();
   const { register, getValues, handleSubmit, watch, control, setValue } = useForm({
     defaultValues: {
       first_name: 'Prashant',
@@ -28,8 +31,8 @@ const ResumeBuilder = () => {
           company_name: 'Brandshark',
           city: 'Bangalore',
           country: 'IN',
-          start_sate: '',
-          end_sate: '',
+          start_date: '',
+          end_date: '',
           work_summary: `<ul><li>Developed Lanceark, a robust keyword-tracking web application tailored for digital marketing agencies.</li><li>Designed to track client data and monitor content management systems efficiently.</li><li>Implemented accurate keyword tracking and analysis, empowering agencies to make informed, data-driven decisions.</li><li>Collaborated closely with team members to gather feedback and iteratively improve the application's functionality and user experience.</li><li>Allows automated social media posting, enhancing overall marketing efficiency and effectiveness.</li></ul>`,
         },
       ],
@@ -48,12 +51,14 @@ const ResumeBuilder = () => {
 
   async function createAndOpenPDF() {
     try {
+      var data = getValues();
+      data.userId = userInfo.id;
       const response = await fetch('http://localhost:5001/create-pdf', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(getValues()),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
@@ -117,6 +122,8 @@ const ResumeBuilder = () => {
   useEffect(() => {
     if (infoCard > 1) {
       $('.backBtn').css('display', 'block');
+
+      // $('.nextBtn').css('display', 'block');
     } else {
       $('.backBtn').css('display', 'none');
     }
@@ -327,13 +334,13 @@ const ResumeBuilder = () => {
                     <div className='col col-6'>
                       <div className='form-group'>
                         <label>Start Date</label>
-                        <input type='date' {...register(`work_experience.${index}.start_sate`)} name={`work_experience.${index}.start_sate`} />
+                        <input type='date' {...register(`work_experience.${index}.start_date`)} name={`work_experience.${index}.start_date`} />
                       </div>
                     </div>
                     <div className='col col-6'>
                       <div className='form-group'>
                         <label>End Date</label>
-                        <input type='date' {...register(`work_experience.${index}.end_sate`)} name={`work_experience.${index}.end_sate`} />
+                        <input type='date' {...register(`work_experience.${index}.end_date`)} name={`work_experience.${index}.end_date`} />
                       </div>
                     </div>
                     <div className='col col-12'>
@@ -417,13 +424,13 @@ const ResumeBuilder = () => {
                     <div className='col col-6'>
                       <div className='form-group'>
                         <label>Start Date</label>
-                        <input type='date' {...register(`education.${index}.start_sate`)} name={`education.${index}.start_sate`} />
+                        <input type='date' {...register(`education.${index}.start_date`)} name={`education.${index}.start_date`} />
                       </div>
                     </div>
                     <div className='col col-6'>
                       <div className='form-group'>
                         <label>End Date</label>
-                        <input type='date' {...register(`education.${index}.end_sate`)} name={`education.${index}.end_sate`} />
+                        <input type='date' {...register(`education.${index}.end_date`)} name={`education.${index}.end_date`} />
                       </div>
                     </div>
                     <div className='col col-12'>
@@ -524,7 +531,12 @@ const ResumeBuilder = () => {
             <div className='section_title'>WORK EXPERIENCE</div>
             {watch().work_experience?.map((data, index) => (
               <div className='section-loop' key={index}>
-                <div>{Parser(`<b>${data.position_title} - ${data.company_name}</b>, ${data.city}, ${data.country}`)}</div>
+                <div className='dateAndInfo'>
+                  <div>{Parser(`<b>${data.position_title} - ${data.company_name}</b>, ${data.city}, ${data.country}`)}</div>
+                  <div>
+                    {data.start_date && moment(data.start_date).format('ll')} {data.end_date && ' - '} {data.end_date && moment(data.end_date).format('ll')}
+                  </div>
+                </div>
                 <div>{data.work_summary && Parser(data.work_summary)}</div>
               </div>
             ))}
@@ -533,7 +545,13 @@ const ResumeBuilder = () => {
             <div className='section_title'>Education</div>
             {watch().education?.map((data, index) => (
               <div className='section-loop' key={index}>
-                <div>{Parser(`<b>${data.school_name}, ${data.degree}</b> | ${data.school_location}`)}</div>
+                <div className='dateAndInfo'>
+                  <div>{Parser(`<b>${data.school_name}, ${data.degree}</b> | ${data.school_location}`)}</div>
+                  <div>
+                    {data.start_date && moment(data.start_date).format('ll')} {data.end_date && ' - '} {data.end_date && moment(data.end_date).format('ll')}
+                  </div>
+                </div>
+
                 <div>{data.description && Parser(data.description)}</div>
               </div>
             ))}
