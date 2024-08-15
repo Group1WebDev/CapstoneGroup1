@@ -26,6 +26,8 @@ import JobsPosted from './components/Employer/JobsPostedEmployer/jobsListEmploye
 import { JobApplication } from './components/JobApplication/jobApplication.jsx';
 import CandidatesList from './components/Employer/CandidatesList/candidates.jsx';
 import ResumeBuilder from './components/ResumeBuilder/resumeBuilder';
+import JobViewPage from './components/Employer/JobsPostedEmployer/viewJob.jsx';
+import UpdatePreviousJob from './components/Employer/JobsPostedEmployer/updateJob.jsx';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -194,6 +196,26 @@ function RouteMain() {
             <EmployerLayout>
               <EmployerParent>
                 <EmployeeDash />
+              </EmployerParent>
+            </EmployerLayout>
+          }
+        />
+        <Route
+          path="/job_detail/:jobId"
+          element={
+            <EmployerLayout>
+              <EmployerParent>
+                <JobViewPage />
+              </EmployerParent>
+            </EmployerLayout>
+          }
+        />
+        <Route
+          path="/job_update/:jobId"
+          element={
+            <EmployerLayout>
+              <EmployerParent>
+                <UpdatePreviousJob />
               </EmployerParent>
             </EmployerLayout>
           }

@@ -485,6 +485,31 @@ span.error {
 .error.salaryError {
     margin-top:20px
 }
+.jobDescriptionParent .applicantsList{
+    margin-top: 30px;
+}
+.viewResumeLink{
+    font-size: 16px;
+    color: var(--primary-color);;
+}
+.viewResumeLink:hover{
+    color: var(--primaryDark-color);;
+}
+.banner_section.viewPage{
+    margin-top: 0px!important;
+}
+.icon.delete{
+    color: #ce0b0b;
+    cursor: pointer;
+}
+.icon.view{
+    color: #1e751e;
+    cursor: pointer;
+}
+.icon.edit{
+    color: black;
+    cursor: pointer;
+}
 
 
 
