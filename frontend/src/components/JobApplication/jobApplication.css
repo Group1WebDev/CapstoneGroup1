@@ -1,0 +1,166 @@
+.jobApplicationParent {
+    margin-top: 70px;
+    padding: 60px;
+}
+
+.jobApplicationParent .oneline_input {
+    margin-bottom: 0px;
+}
+
+.jobApplicationParent .input_parent {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.jobApplicationParent .useResume {
+    color: #959595;
+    font-weight: lighter;
+    margin-bottom: 30px;
+}
+
+.useResume a {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.jobApplicationParent .input_parent input {
+    padding: 10px;
+    border: 1px solid #d6d6d6;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.jobApplicationParent .input_parent input[type='file'] {
+    border: none;
+    padding: 0px;
+    border-radius: 0
+}
+
+.jobApplicationParent .PagePartition {
+    display: flex;
+    justify-content: space-between;
+}
+
+.jobApplicationParent .pagePartitionLeft {
+    flex: 1;
+    flex-direction: column;
+    display: flex;
+}
+
+.jobApplicationParent .pagePartitionRight {
+    flex: 1;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+    padding: 30px 20px;
+    border-radius: 20px;
+}
+
+.jobApplicationParent .pagePartitionRight h2 {
+    margin-bottom: 40px;
+}
+
+.jobApplicationParent .pagePartitionRight .center_content {
+    display: flex;
+    justify-content: center;
+}
+
+.jobApplicationParent .pagePartitionRight .submit_button {
+    padding: 0.75rem 2rem;
+    background-color: #ffa500;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.jobApplicationParent .pagePartitionRight .submit_button:hover {
+    background-color: #ff8c00;
+}
+
+.jobApplicationParent .pagePartitionLeft .Image_divParent {
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(145, 135, 253, 0.3);
+    margin-bottom: 40px;
+}
+
+.jobApplicationParent .pagePartitionLeft h1 {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.jobApplicationParent .pagePartitionLeft span {
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.jobApplicationParent .pagePartitionLeft a {
+    width: 100%;
+    color: var(--primary-color);
+}
+
+.jobApplicationParent .pagePartitionLeft a:hover {
+    color: var(--primaryDark-color);
+}
+
+.jobApplicationParent .pagePartitionLeft img.compIco {
+    width: 100%;
+    height: 100%;
+}
+
+.jobApplicationParent p.erMessage {
+    color: red;
+    font-size: 14px;
+}
+
+
+
+/* Responsive css for job application page */
+@media (max-width: 768px) {
+    .jobApplicationParent .PagePartition {
+        gap: 20px;
+    }
+
+    .jobApplicationParent .pagePartitionLeft .Image_divParent {
+        max-width: 200px;
+        max-height: 200px;
+    }
+
+    .jobApplicationParent .oneline_input {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .jobApplicationParent {
+        padding: 60px 20px;
+    }
+
+    .jobApplicationParent .PagePartition {
+        flex-direction: column;
+    }
+
+    .jobApplicationParent .pagePartitionLeft {
+        text-align: center;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .jobApplicationParent .pagePartitionRight {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .jobApplicationParent .oneline_input {
+        flex-direction: column;
+        gap: 0;
+    }
+}

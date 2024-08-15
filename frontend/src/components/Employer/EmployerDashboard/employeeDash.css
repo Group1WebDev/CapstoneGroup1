@@ -1,0 +1,483 @@
+.dashboard_parent {
+    padding-top: 70px;
+    display: flex;
+    flex-direction: row;
+    transition-duration: 0.8s;
+}
+
+.dashboard_sidebar {
+    width: 360px;
+    background-color: #1d2347;
+    padding: 30px 60px;
+    position: fixed;
+    transition-duration: 0.4s;
+    height: 100vh;
+}
+
+.dashboard_sidebar ul li {
+    margin-bottom: 40px;
+}
+
+.dashboard_sidebar ul {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.dashboard_sidebar ul li a {
+    display: flex;
+    gap: 20px;
+    color: white;
+}
+
+.dashboard_sidebar ul li a:hover {
+    color: #9aa2d7;
+}
+
+.dashboard_sidebar ul li:hover .sidebar_icon {
+    color: #9aa2d7;
+}
+
+.dashboard_sidebar ul li:hover a {
+    color: #9aa2d7;
+}
+
+.dashboard_sidebar a.active {
+    color: #ffa500;
+}
+
+
+.content_zone {
+    width: calc(100% - 360px);
+    transition-duration: 0.4s;
+    padding: 30px;
+    margin-left: 360px;
+    flex-grow: 1;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+    background-color: #f5f6ff;
+}
+
+
+/* sidebar css when collapse state is active */
+.collapsed_sidebar {
+    max-width: 80px;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.collapsed_sidebar .sidebar_logo h2 {
+    display: none;
+}
+
+.collapsed_sidebar li a span {
+    display: none;
+}
+
+.collapsed_sidebar li {
+    padding: 30px 20px;
+    margin-bottom: 0px !important;
+}
+
+.collapsed_sidebar li:hover {
+    background-color: rgb(12 18 59);
+}
+
+.collapsed_sidebar .sidebar_logo a .sidebar_icon {
+    position: unset;
+}
+
+.collapsed_content {
+    margin-left: 80px;
+    width: calc(100% - 80px);
+}
+
+.collapsed_sidebar ul li a {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.content_zone .heading_top {
+    margin-bottom: 40px;
+    font-size: 30px;
+}
+
+.candidates_table,
+.job_postedTable {
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 50px;
+    padding: 26px;
+}
+
+.candidates_table h1,
+.candidates_table h2,
+.candidates_table h3 .job_postedTable h1,
+.job_postedTable h2,
+.job_postedTable h3 {
+    margin-bottom: 30px;
+    font-size: 26px;
+}
+
+.image_cell img {
+    max-height: 30px;
+}
+
+#candidates_tb {
+    width: 100%;
+    text-align: left;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border-radius: 10px;
+}
+
+#candidates_tb tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#candidates_tb tr:hover {
+    background-color: #ddd;
+}
+
+#candidates_tb tr th {
+    padding: 16px;
+}
+
+#candidates_tb tr td,
+.job_postedTable tr td {
+    padding: 16px;
+}
+
+
+
+
+
+.job_postedTable .IconsDiv {
+    display: flex;
+    gap: 20px;
+}
+
+.menu_icon:hover {
+    background: #efefef;
+    transition-duration: 0.2s;
+}
+
+.sidebar_logo {
+    margin-bottom: 60px !important;
+}
+
+.sidebar_logo h2 {
+    color: white;
+}
+
+.sidebar_logo a {
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar_logo a .sidebar_icon {
+    font-size: 24px;
+    position: absolute;
+    right: -22px;
+    color: #9aa2d7;
+    background-color: white;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.sidebar_logo a {
+    color: #495057;
+}
+
+
+
+
+
+/* job posting page css */
+.jobPostPage,
+.profilePage {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 30px;
+}
+
+.multi-range-slider {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0px !important;
+}
+
+.multi-range-slider .label {
+    font-size: 16px !important;
+}
+
+.multi-range-slider .thumb .caption * {
+    background-color: #ffa500 !important;
+    border-radius: 5px !important;
+    box-shadow: none !important;
+    font-size: 16px !important;
+}
+
+.exp_lvl option:disabled {
+    color: white !important;
+}
+
+.multi-range-slider .bar-inner {
+    background-color: #334bd2 !important;
+}
+
+.oneline_input {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    margin-bottom: 30px;
+}
+
+.jobPostPage .oneline_input .input_parent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
+    border: none;
+}
+
+.jobPostPage .oneline_input h3 {
+    width: 100%;
+}
+
+.jobPostPage .oneline_input .input_parent input,
+.input_parent select {
+    padding: 10px;
+    border: 1px solid #d6d6d6;
+    border-radius: 5px;
+}
+
+.jobPostPage .oneline_input .language_selection input {
+    margin-right: 10px;
+}
+
+.jobPostPage .submit_btn {
+    width: 100%;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.jobPostPage .submit_btn input {
+    padding: 8px 20px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.jobPostPage h2{
+    margin-bottom: 20px;
+}
+
+.jobPostPage .submit_btn input:hover {
+    background-color: var(--primaryDark-color);
+}
+.jobPostPage .input_parent {
+    margin-bottom: 30px;
+}
+.jobPostPage .input_parent .google_autocomplete{
+    margin-bottom: 5px;
+}
+
+
+
+
+
+/*  PROFILE PAGE CSS  */
+.profilePage .img_prnt {
+    background-color: #eaedff;
+    display: flex;
+    padding: 30px;
+    margin: -30px;
+    position: relative;
+}
+
+.profilePage .img_prnt .img_bg {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    margin-right: 40px;
+}
+
+.profilePage .img_prnt .editBtn {
+    font-size: 18px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: var(--secondary-color);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+}
+
+.profilePage .img_prnt .editBtn:hover {
+    background-color: var(--secondaryDark-color);
+}
+
+.profilePage .img_prnt .editBtn {
+    cursor: pointer;
+}
+
+.profilePage .img_prnt .editBtn button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+.profilePage p.userTitle {
+    color: #ffa500;
+    margin-top: 5px;
+}
+
+.profilePage .img_prnt .img_bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profilePage .icon_content {
+    display: flex;
+    gap: 10px;
+    color: #5b5b5b;
+}
+
+.profilePage .info_area {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profilePage .skilss_bg {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.profilePage .skilss_bg .skill_tags {
+    padding: 8px 16px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.profilePage .personal_details {
+    margin-top: 60px;
+}
+
+.profilePage .personal_details h2 {
+    margin-bottom: 30px;
+}
+
+.personal_details .profile_input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 16px;
+    color: rgb(84, 84, 84);
+    width: 100%;
+    margin-bottom: 60px;
+}
+
+.personal_details .profile_input label {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.personal_details .profile_input textarea,
+.user_detail input,
+.userLocation input {
+    border-radius: 5px;
+    background-color: white;
+    border: none;
+    outline: none;
+}
+
+.personal_details .profile_input input {
+    border: none;
+    padding: 0;
+    outline: none;
+    font-size: 16px;
+    color: #545454;
+    background: transparent;
+}
+
+.personal_details .profile_input ul li {
+    list-style-type: disclosure-closed;
+    display: list-item;
+    margin-bottom: 20px;
+}
+
+.personal_details .profile_input ul li h4 {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.inputs_shadow {
+    padding: 16px 20px;
+}
+
+.shadow_input {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 8px 10px !important;
+}
+
+.profilePage .update_button {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.profilePage .update_button button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+button.cancel_button {
+    background-color: #ebebeb !important;
+    color: black !important;
+    margin-right: 20px;
+}
+
+
+
+
+/* ---- JOBS LISTED PAGE ---- */
+.view_allBtn{
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--secondary-color);
+    color: #fff;
+    cursor: pointer;
+}
+.view_allBtn:hover{
+    background-color: var(--secondaryDark-color);
+}
+
+
+@media (max-width: 1200px) {}

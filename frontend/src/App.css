@@ -107,6 +107,11 @@ p {
 .register_button:hover {
   background-color: var(--primaryDark-color);
 }
+.flexRowContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 /* Media Queries */
 @media (max-width: 768px) {

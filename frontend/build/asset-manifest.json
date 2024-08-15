@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a7bdd199.css",
+    "main.js": "/static/js/main.f49c884f.js",
+    "static/media/mobile.png": "/static/media/mobile.d8e6715966fc988a828d.png",
+    "static/media/header_bg.png": "/static/media/header_bg.9e29e921ae6f8ed98895.png",
+    "static/media/jobBanner.jpg": "/static/media/jobBanner.c0c1f98d9a41fb5c376a.jpg",
+    "static/media/vector12.png": "/static/media/vector12.f466f87fcf263e259bee.png",
+    "static/media/loginBackGr.png": "/static/media/loginBackGr.51afe92b2fa078fe8e74.png",
+    "static/media/forgotScreen.png": "/static/media/forgotScreen.87468146d0f8b6f3a24a.png",
+    "static/media/dummyLogo1.jpg": "/static/media/dummyLogo1.1442d3c667a19aba849c.jpg",
+    "static/media/user_icon.jpg": "/static/media/user_icon.5fc7ec08f82fb4f2d5d8.jpg",
+    "index.html": "/index.html",
+    "main.a7bdd199.css.map": "/static/css/main.a7bdd199.css.map",
+    "main.f49c884f.js.map": "/static/js/main.f49c884f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a7bdd199.css",
+    "static/js/main.f49c884f.js"
+  ]
+}

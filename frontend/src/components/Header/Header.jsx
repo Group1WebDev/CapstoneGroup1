@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from 'react';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import './header.css';
 import { useAuth } from '../../useToken';
 
 function Header() {
-  const { token, setToken, removeToken, userInfo } = useAuth();
+  const { token, removeToken, userInfo } = useAuth();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const logout = () => removeToken();
+  const logout = () => {
+    removeToken();
+    setIsLoggedIn(false);
+    window.sessionStorage.removeItem('userInfo');
+    navigate('/');
+  };
 
   useEffect(() => {
-    const token = window.sessionStorage.getItem('token');
-    setIsLoggedIn(token !== null && token !== '');
-  }, [isLoggedIn]);
+    const storageUserInfo = window.sessionStorage.getItem('userInfo');
+    const storageToken = storageUserInfo ? JSON.parse(storageUserInfo).token : null;
+    setIsLoggedIn(storageToken !== null && storageToken !== '');
+  }, [token]);
+  useEffect(() => {}, [location.pathname, userInfo]);
+
+  const isUserLogged = userInfo?.role === 'user';
+  const isEmployerLogged = userInfo?.role === 'employer';
+
   return (
     <header className='mainHead'>
       <div className='container mainHead'>
@@ -27,22 +40,59 @@ function Header() {
               </NavLink>
             </li>
 
-            <li>
-              <NavLink activeclassname='is-active' to='/job-list'>
-                Job List
-              </NavLink>
-            </li>
-            <li>
-              <NavLink activeclassname='is-active' to='/contactUs'>
-                Contact Us
-              </NavLink>
-            </li>
-            <li>
-              <NavLink activeclassname='is-active' to='/aboutUs'>
-                About Us
-              </NavLink>
-            </li>
-            {token ? (
+            {isLoggedIn && isUserLogged && (
+              <>
+                <li>
+                  <NavLink activeclassname='is-active' to='/jobList'>
+                    Job List
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink activeclassname='is-active' to='/contactUs'>
+                    Contact Us
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink activeclassname='is-active' to='/aboutUs'>
+                    About Us
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink activeclassname='is-active' to='/resume-builder'>
+                    Resume Builder
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink activeclassname='is-active' to='/userProfile'>
+                    Profile
+                  </NavLink>
+                </li>
+              </>
+            )}
+            {isLoggedIn && isEmployerLogged && (
+              <li>
+                <NavLink exact activeclassname='is-active' to='/employer/dashboard'>
+                  Dashboard
+                </NavLink>
+              </li>
+            )}
+
+            {!isLoggedIn && (
+              <>
+                <li>
+                  <NavLink activeclassname='is-active' to='/contactUs'>
+                    Contact Us
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink activeclassname='is-active' to='/aboutUs'>
+                    About Us
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {isLoggedIn ? (
               <button className='register_button' onClick={logout}>
                 Logout
               </button>
