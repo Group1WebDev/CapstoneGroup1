@@ -10,10 +10,12 @@ export default function Jobs() {
   const [radius, setRadius] = useState(100);
   const [salary, setSalary] = useState(50000);
   const [jobsListing, setJobsListing] = useState([]);
+  const [filterExpand, setFilterExpand] = useState(false);
   const [userSearchInput, setUserSearchInput] = useState("");
   const [userLocationInput, setUserLocationInput] = useState("");
   const [userSelectedCategory, setUserSelectedCategory] = useState("");
   const [apifilteredJobs, setApifilteredJobs] = useState([]);
+
 
   const jobSearchHandler = () => {
     const finalFilteredResult =
@@ -37,6 +39,7 @@ export default function Jobs() {
     setApifilteredJobs(finalFilteredResult);
   }
 
+
   useEffect(() => {
     const fetchJobs = async () => {
       setResponseLoading(true);
@@ -48,11 +51,10 @@ export default function Jobs() {
         const data = await response.json();
         setJobsListing(data);
         setApifilteredJobs(data);
-        setResponseLoading(false);
       } catch (error) {
         console.error('err fetching job:', error);
-        setResponseLoading(false);
       }
+      setResponseLoading(false);
     };
 
     fetchJobs();
@@ -94,7 +96,8 @@ export default function Jobs() {
 
           <div className='content_area'>
             <div className='container'>
-              <div className='filter_area'>
+              <button className='filterExpandBtn' onClick={() => setFilterExpand(!filterExpand)}>Expand Filters</button>
+              <div className={`filter_area ${filterExpand ? '' : 'filterCollapsed'}`}>
                 <h2>Location</h2>
                 <div className='areaSlider'>
                   <label>Search Radius</label>
@@ -190,6 +193,7 @@ export default function Jobs() {
 
                 <button>Apply Filter</button>
               </div>
+
 
               <div className='job_grid'>
                 {apifilteredJobs.map((job, index) => (

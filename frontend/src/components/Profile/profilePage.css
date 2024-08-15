@@ -203,4 +203,34 @@ select {
     .profilePage.userProfile .container{
         padding: 0 20px;
     }
+    .profilePage .info_area{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .profilePage .info_area .user_detail h2{
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+    .profilePage .img_prnt .img_bg{
+        margin-right: 0px
+    }
+    .profilePage .personal_details{
+        margin-top: 30px;
+    }
+    .personal_details .profile_input label{
+        font-size: 16px;
+    }
+    .personal_details .profile_input textarea{
+        margin-bottom: 30px;
+    }
+    .profilePage.userProfile .banner_section{
+        min-height: 200px;
+    }
+    .profilePage.userProfile .container {
+        margin-top: 40px;
+    }
+    .profilePage.userProfile .banner_section::after {
+        font-size: 30px;
+    }
 }

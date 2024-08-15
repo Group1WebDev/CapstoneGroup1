@@ -12,6 +12,7 @@
     position: fixed;
     transition-duration: 0.4s;
     height: 100vh;
+    z-index: 2;
 }
 
 .dashboard_sidebar ul li {
@@ -463,6 +464,11 @@ span.error {
     margin-bottom: 20px;
 }
 
+.tableParent {
+    width: 100%;
+    overflow-x: auto;
+}
+
 .personal_details .profile_input ul li h4 {
     display: inline-block;
     margin-right: 30px;
@@ -517,3 +523,149 @@ button.cancel_button {
 
 
 @media (max-width: 1200px) {}
+
+@media (max-width: 768px) {
+    .content_zone {
+        width: 100%;
+        margin-left: 0;
+        padding: 10px;
+        position: inherit;
+    }
+
+    .collapsed_content {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+        height: calc(100vh - 50px);
+    }
+
+    .collapsed_content::after {
+        display: none;
+    }
+
+    .content_zone::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        opacity: 0.6;
+        z-index: 1;
+    }
+
+    .content_zone .heading_top {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .candidates_table h1,
+    .candidates_table h2,
+    .candidates_table h3 .job_postedTable h1,
+    .job_postedTable h2,
+    .job_postedTable h3 {
+        margin-bottom: 0;
+        font-size: 14px;
+    }
+
+    .candidates_table,
+    .job_postedTable {
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    .view_allBtn {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    #candidates_tb tr th {
+        padding: 8px;
+    }
+
+    #candidates_tb {
+        font-size: 10px;
+        margin-top: 10px;
+        overflow-x: auto;
+    }
+
+    #candidates_tb tr td,
+    .job_postedTable tr td {
+        padding: 8px;
+    }
+
+    .collapsed_sidebar li {
+        padding: 20px 8px;
+    }
+
+    .candidates_table,
+    .job_postedTable {
+        overflow: hidden;
+    }
+
+    .mainHead h2 {
+        font-size: 20px;
+    }
+
+    .mainHead {
+        height: 50px;
+    }
+
+    .dashboard_parent {
+        padding-top: 50px;
+    }
+
+    .collapsed_sidebar {
+        max-width: 60px;
+    }
+
+    .sidebar_logo a .sidebar_icon {
+        font-size: 16px;
+    }
+
+    .job_postedTable .IconsDiv {
+        gap: 10px;
+    }
+
+    .jobPostPage,
+    .profilePage {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+    .profilePage .img_prnt{
+        margin: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .jobPostPage .oneline_input{
+        flex-direction: column;
+        gap: 0;
+    }
+    .jobPostPage .input_parent {
+        margin-bottom: 10px;
+    }
+    input[name="jobVacancies"]{
+        margin-left: 16px;
+    }
+    .multi-range-slider{
+        margin-bottom: 30px;
+    }
+    .dashboard_parent h1{
+        font-size: 20px;
+    }
+    .mainHead {
+        display: flex;
+        height: 80px;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .collapsed_content{
+        height: calc(100vh - 80px);
+    }
+    .dashboard_parent{
+        padding-top: 80px;
+    }
+}

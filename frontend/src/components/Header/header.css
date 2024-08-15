@@ -63,7 +63,11 @@
 }
 
 @media (max-width: 768px) {
-  .mainHead ul {
-    display: none;
+  .mainHead nav ul li {
+    margin-right: 16px;
+    text-align: center;
+  }
+  .mainHead nav ul li a{
+    font-size: 14px;
   }
 }
