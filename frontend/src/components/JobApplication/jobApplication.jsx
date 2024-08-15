@@ -122,7 +122,7 @@ export const JobApplication = () => {
                                         </div>
                                         <div className='input_parent'>
                                             <label>Upload Resume:</label>
-                                            <input type="file" name="userResume" accept=".pdf, .doc, .docx" onChange={handleChange} />
+                                            <input type="file" name="userResume" accept=".pdf" onChange={handleChange} />
                                             {submiterrors.userResume && <p className="erMessage">{submiterrors.userResume}</p>}
                                         </div>
                                     </div>

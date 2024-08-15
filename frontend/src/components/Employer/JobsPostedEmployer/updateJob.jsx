@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import MultiRangeSlider from 'multi-range-slider-react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CustomLoadFunction from '../../CustomLoader/customLoader';
 
-function AddNewJob() {
+function UpdatePreviousJob() {
   const [minSalary, set_minSalary] = useState(25);
   const [maxSalary, set_maxSalary] = useState(75);
   const [locationSelected, setLocationSelected] = useState(null);
   const [responseLoading, setResponseLoading] = useState(false);
   const navigate = useNavigate();
+  const { jobId } = useParams();
 
   const [jobPostErrors, setJobPostErrors] = useState({});
 
@@ -51,7 +52,7 @@ function AddNewJob() {
 
     if (!formValues.jobDescription) {
       errors.jobDescription = 'Job description is required';
-    } else if (formValues.jobDescription.length<100) {
+    } else if (formValues.jobDescription.length < 100) {
       errors.jobDescription = 'Job Description should be more than 100 chars';
     }
 
@@ -99,6 +100,48 @@ function AddNewJob() {
     }
   };
 
+
+  useEffect(() => {
+    const fetchViewJob = async () => {
+      setResponseLoading(true);
+      try {
+        const response = await fetch(`http://localhost:5001/jobs/${jobId}`);
+        if (!response.ok) {
+          throw new Error('no job data');
+          alert('no data');
+          setResponseLoading(false);
+        }
+        const data = await response.json();
+        console.log(data,'sdjvs')
+        setFormValues({
+          jobTitle: data.jobTitle,
+          jobCategory: data.jobCategory,
+          jobType: data.jobType,
+          experienceLevel: data.experienceLevel,
+          jobDescription: data.jobDescription,
+          jobVacancies: data.jobVacancies,
+        });
+        set_minSalary(data.minSalary);
+        set_maxSalary(data.maxSalary);
+        setlanguageSelected(data.languageRequirement);
+        setExactLocation({
+          addressLine1: data.addressLine,
+          city: data.city,
+          province: data.province,
+          country: data.country,
+        });
+        setResponseLoading(false);
+      } catch (error) {
+        console.error('no job data', error);
+        setResponseLoading(false);
+      }
+    };
+
+    fetchViewJob();
+  }, [jobId])
+
+
+
   useEffect(() => {
     if (locationSelected && locationSelected.value && locationSelected.value.terms) {
       const locationValues = locationSelected.value.terms;
@@ -128,6 +171,9 @@ function AddNewJob() {
     });
   };
   let user = JSON.parse(sessionStorage.getItem('userInfo'))
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (jobPostValidations()) {
@@ -143,32 +189,32 @@ function AddNewJob() {
         country: exactLocation.country,
         posted_by: user?.user.id
       };
-  
+
       try {
-        const response = await fetch('https://group-1-capstone.onrender.com/jobs', {
-          method: 'POST',
+        const response = await fetch(`http://localhost:5001/jobs/${jobId}`, {
+          method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(jobData),
         });
-  
+
         if (!response.ok) {
           console.log('ERR 93');
           setResponseLoading(false);
         }
-  
+
         const result = await response.json();
-        console.log('posting created:', result);
+        console.log('posting updated:', result);
         navigate('/employer/dashboard');
         setResponseLoading(false);
       } catch (error) {
-        console.error('err creating job posting:', error);
-        alert('Error in creating job post. Please try again')
+        console.error('err updating job posting:', error);
+        alert('Error in updating job post. Please try again')
         setResponseLoading(false);
       }
     }
-    
+
   };
 
   return (
@@ -177,7 +223,7 @@ function AddNewJob() {
         <CustomLoadFunction />
       ) : (
         <div>
-          <h1 className='heading_top'>Add New Job</h1>
+          <h1 className='heading_top'>Update Job</h1>
           <section className='jobPostPage'>
             <form onSubmit={handleSubmit}>
               <div className='oneline_input'>
@@ -257,8 +303,8 @@ function AddNewJob() {
                 <div className='input_parent'>
                   <label>Job Description</label>
                   <textarea cols='4' rows='12' name='jobDescription' value={formValues.jobDescription}
-                   onChange={handleChange} />
-                   {jobPostErrors.jobDescription && <span className='error'>{jobPostErrors.jobDescription}</span>}
+                    onChange={handleChange} />
+                  {jobPostErrors.jobDescription && <span className='error'>{jobPostErrors.jobDescription}</span>}
                 </div>
               </div>
               <h2>Job Location Details</h2>
@@ -303,7 +349,7 @@ function AddNewJob() {
                 </div>
               </div>
               <div className='submit_btn'>
-                <input type='submit' value='Add Job Posting' />
+                <input type='submit' value='Update Job Posting' />
               </div>
             </form>
           </section>
@@ -313,4 +359,4 @@ function AddNewJob() {
   )
 }
 
-export default AddNewJob;
+export default UpdatePreviousJob;
