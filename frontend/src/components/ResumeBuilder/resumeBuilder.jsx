@@ -111,7 +111,7 @@ const ResumeBuilder = () => {
     control,
     name: 'education',
   });
-  const onSubmit = (data) => console.log(data);
+
   const [infoCard, setInfoCard] = useState(1);
 
   useEffect(() => {
@@ -123,13 +123,49 @@ const ResumeBuilder = () => {
   });
 
   const changeCardNext = () => {
+    const currentCardIndex = infoCard;
+
+    let checkValueIsValid = true;
+
+    if (currentCardIndex === 1) {
+      const requiredCard1Data = {
+        first_name: getValues('first_name'),
+        last_name: getValues('last_name'),
+        job_title: getValues('job_title'),
+        address: getValues('address'),
+        phone: getValues('phone'),
+        email: getValues('email'),
+      };
+      checkValueIsValid = Object.values(requiredCard1Data).every((field) => field);
+    } else if (currentCardIndex === 2) {
+      const professionalSummary = getValues('professional_summary');
+      checkValueIsValid = professionalSummary && professionalSummary.trim() !== '<p><br></p>';
+    } else if (currentCardIndex === 3) {
+      const workExperience = getValues('work_experience');
+      checkValueIsValid = workExperience.every((experience) => experience.position_title && experience.company_name && experience.city && experience.country && experience.work_summary.trim() !== '<p><br></p>');
+    } else if (currentCardIndex === 4) {
+      const education = getValues('education');
+      checkValueIsValid = education.every((education) => education.school_name && education.degree && education.school_location && education.description.trim() != '<p><br></p>');
+    } else if (currentCardIndex === 5) {
+      const keySkills = getValues('key_skills');
+      checkValueIsValid = keySkills && keySkills.trim() !== '<p><br></p>';
+    }
+
+    if (!checkValueIsValid) {
+      $('.errorMessage').css('display', 'block');
+      return;
+    } else {
+      $('.errorMessage').css('display', 'none');
+    }
+
     setInfoCard((prevInfoCard) => {
       const nextCard = prevInfoCard + 1;
-      $('.card').css('display', 'none');
-      $(`.card_${nextCard}`).css('display', 'block');
+      $('.card').addClass('d-none');
+      $(`.card_${nextCard}`).removeClass('d-none');
       return nextCard;
     });
   };
+
   const changeCardBack = () => {
     setInfoCard((prevInfoCard) => {
       const backCard = prevInfoCard - 1;
@@ -163,41 +199,42 @@ const ResumeBuilder = () => {
             <div className='row'>
               <div className='col col-6'>
                 <div className='form-group'>
-                  <label>First Name</label>
+                  <label>First Name*</label>
                   <input type='text' {...register('first_name')} name='first_name' />
                 </div>
               </div>
               <div className='col col-6'>
                 <div className='form-group'>
-                  <label>Last Name</label>
+                  <label>Last Name*</label>
                   <input type='text' {...register('last_name')} name='last_name' />
                 </div>
               </div>
               <div className='col col-6'>
                 <div className='form-group'>
-                  <label>Job Title</label>
+                  <label>Job Title*</label>
                   <input type='text' {...register('job_title')} name='job_title' />
                 </div>
               </div>
               <div className='col col-6'>
                 <div className='form-group'>
-                  <label>Address</label>
+                  <label>Address*</label>
                   <input type='text' {...register('address')} name='address' />
                 </div>
               </div>
 
               <div className='col col-6'>
                 <div className='form-group'>
-                  <label>Phone</label>
+                  <label>Phone*</label>
                   <input type='text' {...register('phone')} name='phone' />
                 </div>
               </div>
               <div className='col col-6'>
                 <div className='form-group'>
-                  <label>Email</label>
+                  <label>Email*</label>
                   <input type='email' {...register('email')} name='email' />
                 </div>
               </div>
+              <div className='col col-12 errorMessage'>Please fill in all required fields before submitting.</div>
             </div>
           </div>
           <div className='card card_2 d-none'>
@@ -209,7 +246,7 @@ const ResumeBuilder = () => {
               <div className='col col-12'>
                 <div className='form-group'>
                   <label>
-                    Professional Summary <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faCircleInfo} onClick={() => openModal('professional_summary')} />
+                    Professional Summary* <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faCircleInfo} onClick={() => openModal('professional_summary')} />
                   </label>
 
                   <Modal isOpen={openModalId === 'professional_summary'} onRequestClose={closeModal}>
@@ -236,6 +273,7 @@ const ResumeBuilder = () => {
                   {/* <textarea rows={5} {...register('professional_summary')} name='professional_summary' /> */}
                 </div>
               </div>
+              <div className='col col-12 errorMessage'>Please fill in all required fields before submitting.</div>
             </div>
           </div>
           <div className='card card_3 d-none'>
@@ -250,25 +288,25 @@ const ResumeBuilder = () => {
                   <div className='row card-line'>
                     <div className='col col-6'>
                       <div className='form-group'>
-                        <label>Position Title</label>
+                        <label>Position Title*</label>
                         <input type='text' {...register(`work_experience.${index}.position_title`)} name={`work_experience.${index}.position_title`} />
                       </div>
                     </div>
                     <div className='col col-6'>
                       <div className='form-group'>
-                        <label>Company Name</label>
+                        <label>Company Name*</label>
                         <input type='text' {...register(`work_experience.${index}.company_name`)} name={`work_experience.${index}.company_name`} />
                       </div>
                     </div>
                     <div className='col col-6'>
                       <div className='form-group'>
-                        <label>City</label>
+                        <label>City*</label>
                         <input type='text' {...register(`work_experience.${index}.city`)} name={`work_experience.${index}.city`} />
                       </div>
                     </div>
                     <div className='col col-6'>
                       <div className='form-group'>
-                        <label>Country</label>
+                        <label>Country*</label>
                         <input type='text' {...register(`work_experience.${index}.country`)} name={`work_experience.${index}.country`} />
                       </div>
                     </div>
@@ -287,7 +325,7 @@ const ResumeBuilder = () => {
                     <div className='col col-12'>
                       <div className='form-group'>
                         <label>
-                          Work Summary <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faCircleInfo} onClick={() => openModal(index + 'workSummary')} />
+                          Work Summary* <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faCircleInfo} onClick={() => openModal(index + 'workSummary')} />
                         </label>
 
                         <Modal isOpen={openModalId === index + 'workSummary'} onRequestClose={closeModal}>
@@ -320,6 +358,10 @@ const ResumeBuilder = () => {
               })}
             </div>
 
+            <div className='col col-12 errorMessage' style={{ marginTop: '16px' }}>
+              Please fill in all required fields before submitting.
+            </div>
+
             <div
               style={{ marginTop: '16px' }}
               className='btn-text'
@@ -342,19 +384,19 @@ const ResumeBuilder = () => {
                   <div className='row card-line'>
                     <div className='col col-12'>
                       <div className='form-group'>
-                        <label>School Name</label>
+                        <label>School Name*</label>
                         <input type='text' {...register(`education.${index}.school_name`)} name={`education.${index}.school_name`} />
                       </div>
                     </div>
                     <div className='col col-6'>
                       <div className='form-group'>
-                        <label>Degree</label>
+                        <label>Degree*</label>
                         <input type='text' {...register(`education.${index}.degree`)} name={`education.${index}.degree`} />
                       </div>
                     </div>
                     <div className='col col-6'>
                       <div className='form-group'>
-                        <label>School Location</label>
+                        <label>School Location*</label>
                         <input type='text' {...register(`education.${index}.school_location`)} name={`education.${index}.school_location`} />
                       </div>
                     </div>
@@ -372,7 +414,7 @@ const ResumeBuilder = () => {
                     </div>
                     <div className='col col-12'>
                       <div className='form-group'>
-                        <label>Description</label>
+                        <label>Description*</label>
 
                         <Controller name={`education.${index}.description`} control={control} render={({ field }) => <ReactQuill {...field} theme='snow' onChange={(value) => setValue(`education.${index}.description`, value)} />} />
 
@@ -382,6 +424,9 @@ const ResumeBuilder = () => {
                   </div>
                 );
               })}
+            </div>
+            <div className='col col-12 errorMessage' style={{ marginTop: '16px' }}>
+              Please fill in all required fields before submitting.
             </div>
 
             <div
@@ -404,7 +449,7 @@ const ResumeBuilder = () => {
               <div className='col col-12'>
                 <div className='form-group'>
                   <label>
-                    Key Skills <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faCircleInfo} onClick={() => openModal('key_skills')} />
+                    Key Skills* <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faCircleInfo} onClick={() => openModal('key_skills')} />
                   </label>
 
                   <Modal isOpen={openModalId === 'key_skills'} onRequestClose={closeModal}>
@@ -429,6 +474,7 @@ const ResumeBuilder = () => {
                   <Controller name='key_skills' control={control} render={({ field }) => <ReactQuill {...field} theme='snow' onChange={(value) => handleQuillChange('key_skills', value)} />} />
                 </div>
               </div>
+              <div className='col col-12 errorMessage'>Please fill in all required fields before submitting.</div>
             </div>
           </div>
         </div>
