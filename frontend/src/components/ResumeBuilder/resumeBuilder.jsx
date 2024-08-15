@@ -46,6 +46,25 @@ const ResumeBuilder = () => {
     name: 'work_experience',
   });
 
+  async function createAndOpenPDF() {
+    try {
+      const response = await fetch('http://localhost:5001/create-pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(getValues()),
+      });
+
+      if (!response.ok) {
+        throw new Error('err creating pdf');
+      }
+      window.open('http://localhost:5001/get-resume', '_blank');
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const [openModalId, setOpenModalId] = useState(null);
 
   const openModal = (id) => {

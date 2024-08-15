@@ -1,5 +1,4 @@
 const express = require('express');
-
 const multer = require('multer');
 
 // Controllers
@@ -10,6 +9,7 @@ const forgotPassword = require('./controllers/forgotPasswordController');
 const generateOTP = require('./controllers/otpController');
 const updateProfile = require('./controllers/profileController');
 const geminiController = require('./controllers/geminiController');
+const resumesetupController = require('./controllers/resumesetupController');
 
 const router = express.Router();
 
@@ -27,6 +27,9 @@ const upload = multer({ storage });
 // app.post('/', upload.single('image'), 'RouteName');
 
 // Routes
+router.get('/', (req, res) => {
+  res.status(400).json({ message: 'test' });
+});
 router.post('/userRegister', userRegister);
 router.post('/login', login);
 router.get('/get_Userprofile/:id', updateProfile.getUserProfile);
@@ -41,8 +44,12 @@ router.patch('/jobs/:id', jobController.updateJobPosting);
 router.delete('/jobs/:id', jobController.deleteJobPosting);
 router.post('/jobs/:id', upload.single('resume'), jobController.applyToJob);
 
+router.post('/change-password', updateProfile.changePassword);
+
 router.post('/forgotPassword', forgotPassword);
 router.post('/generateOTP', generateOTP);
 router.post('/gemini-res', geminiController.geminiRun);
 
+router.post('/create-pdf', resumesetupController.createPDF);
+router.get('/get-resume', resumesetupController.getResume);
 module.exports = router;
