@@ -28,6 +28,7 @@ import CandidatesList from './components/Employer/CandidatesList/candidates.jsx'
 import ResumeBuilder from './components/ResumeBuilder/resumeBuilder';
 import JobViewPage from './components/Employer/JobsPostedEmployer/viewJob.jsx';
 import UpdatePreviousJob from './components/Employer/JobsPostedEmployer/updateJob.jsx';
+import UpdatePass from './components/Profile/updatePassword.jsx';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -176,6 +177,14 @@ function RouteMain() {
           element={
             <Layout>
               <ResumeBuilder />
+            </Layout>
+          }
+        />
+        <Route
+          path='/updatePassword'
+          element={
+            <Layout>
+              <UpdatePass />
             </Layout>
           }
         />

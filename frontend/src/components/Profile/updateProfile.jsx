@@ -5,11 +5,13 @@ import userImg from '../../images/user_icon.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import CustomLoadFunction from '../CustomLoader/customLoader';
+import { useNavigate } from 'react-router-dom';
 
 function ProfilePage() {
   let user = JSON.parse(sessionStorage.getItem('userInfo'));
 
   const [isUserEditing, setUserEditing] = useState(false);
+  const navigate = useNavigate();
 
   const [username, setUserName] = useState('');
   const [useremail, setUserEmail] = useState('');
@@ -26,6 +28,9 @@ function ProfilePage() {
 
   const handleEditIconClick = () => {
     setUserEditing(!isUserEditing);
+  };
+  const goToUpdatePassword = () => {
+    navigate('/updatePassword');
   };
 
   const handleUpdateButton = () => {
@@ -105,7 +110,9 @@ function ProfilePage() {
                   <span className='userLocation'>{userLocation}</span>
                 </div>
               </div>
-
+              <div className=''>
+                <button className='updatePassBtn' onClick={goToUpdatePassword}>Update Password</button>
+              </div>
               <div className='editBtn' onClick={handleEditIconClick}>
                 <button>
                   <FontAwesomeIcon icon={faEdit} />
