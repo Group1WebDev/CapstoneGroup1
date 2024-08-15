@@ -12,7 +12,7 @@ const jobPostingSchema = new mongoose.Schema({
   },
   jobCategory: {
     type: String,
-    enum: ['Web Developer', 'Web Designer', 'Content Writer'],
+    enum: ['technology', 'finance', 'marketing', 'food', 'construction', 'other'],
     required: true,
   },
   jobType: {

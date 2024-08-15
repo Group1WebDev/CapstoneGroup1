@@ -8,6 +8,32 @@ export default function Jobs() {
   const [radius, setRadius] = useState(100);
   const [salary, setSalary] = useState(50000);
   const [jobsListing, setJobsListing] = useState([]);
+  const [userSearchInput, setUserSearchInput] = useState("");
+  const [userLocationInput, setUserLocationInput] = useState("");
+  const [userSelectedCategory, setUserSelectedCategory] = useState("");
+  const [apifilteredJobs, setApifilteredJobs] = useState([]);
+
+  const jobSearchHandler = () => {
+    const finalFilteredResult =
+      jobsListing.filter((job) => {
+        const searchedKeywords =
+          job.jobTitle.toLowerCase().includes(userSearchInput.toLowerCase()) ||
+          job.jobType.toLowerCase().includes(userSearchInput.toLowerCase());
+
+        const searchedLocation =
+          job.city.toLowerCase().includes(userLocationInput.toLowerCase()) ||
+          job.province.toLowerCase().includes(userLocationInput.toLowerCase()) ||
+          job.country.toLowerCase().includes(userLocationInput.toLowerCase());
+
+        const searchedCategory =
+          userSelectedCategory === "" ||
+          userSelectedCategory === "allCategory" ||
+          job.jobCategory.toLowerCase() === userSelectedCategory.toLowerCase();
+
+        return searchedKeywords && searchedLocation && searchedCategory;
+      });
+    setApifilteredJobs(finalFilteredResult);
+  }
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -18,6 +44,7 @@ export default function Jobs() {
         }
         const data = await response.json();
         setJobsListing(data);
+        setApifilteredJobs(data);
       } catch (error) {
         console.error('err fetching job:', error);
       }
@@ -34,24 +61,25 @@ export default function Jobs() {
             <div className='search_bar'>
               <div className='search_field'>
                 <FontAwesomeIcon icon={faSearch} className='icon' />
-                <input type='text' placeholder='Job title, keywords, or company' />
+                <input type='text' placeholder='Job title, keywords, or company' onChange={(e) => setUserSearchInput(e.target.value)} />
               </div>
               <div className='search_field'>
                 <FontAwesomeIcon icon={faMapMarkerAlt} className='icon' />
-                <input type='text' placeholder='City or postcode' />
+                <input type='text' placeholder='City or postcode' onChange={(e) => setUserLocationInput(e.target.value)} />
               </div>
               <div className='search_field'>
                 <FontAwesomeIcon icon={faBriefcase} className='icon' />
-                <select>
+                <select onChange={(e) => setUserSelectedCategory(e.target.value)}>
                   <option value=''>Choose a category</option>
-                  <option value='tech'>Tech</option>
+                  <option value='allCategory'>All categories</option>
+                  <option value='technology'>Tech</option>
                   <option value='finance'>Finance</option>
                   <option value='marketing'>Marketing</option>
                   <option value='food'>Food</option>
                   <option value='construction'>Construction</option>
                 </select>
               </div>
-              <button className='search_button'>Find Jobs</button>
+              <button className='search_button' onClick={jobSearchHandler}>Find Jobs</button>
             </div>
           </div>
         </div>
@@ -156,7 +184,7 @@ export default function Jobs() {
             </div>
 
             <div className='job_grid'>
-              {jobsListing.map((job, index) => (
+              {apifilteredJobs.map((job, index) => (
                 <Link to={'/jobDescription/' + job._id}>
                   <div key={index} className='job_card'>
                     <div className='job_card_header'>
