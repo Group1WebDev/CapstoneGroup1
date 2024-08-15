@@ -94,7 +94,7 @@ const applyToJob = async (req, res) => {
     const { totalExp, resume, userCoverL, userId } = req.body;
     const newApplicant = {
       expYears: Number(totalExp),
-      resume: 'http://localhost:5001/profiles/' + req.file.filename,
+      resume: 'https://group-1-capstone.onrender.com/profiles/' + req.file.filename,
       coverLetter: userCoverL,
       userId: userId,
     };

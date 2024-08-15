@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './jobApplication.css';
 import CompanyLogo from '../../images/dummyLogo1.jpg';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
+import CustomLoadFunction from '../CustomLoader/customLoader';
 
 export const JobApplication = () => {
     let navigate = useNavigate();
@@ -18,6 +19,7 @@ export const JobApplication = () => {
 
     const [submiterrors, setSubmiterrors] = useState({});
     const [submitData, setSubmitData] = useState(false);
+    const [responseLoading, setResponseLoading] = useState(false);
 
 
     const ApplicationValidations = (values) => {
@@ -44,7 +46,7 @@ export const JobApplication = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setResponseLoading(true);
         setSubmiterrors(ApplicationValidations(userProfile));
         setSubmitData(true);
     };
@@ -64,14 +66,18 @@ export const JobApplication = () => {
 
                 if (!response.ok) {
                     console.log('err in submitting');
+                    setResponseLoading(false);
                 }
 
                 const result = await response.json();
                 console.log('Application Submitted', result);
                 alert('Application Submitted');
                 navigate('/');
+                setResponseLoading(false);
             } catch (error) {
                 console.error('err submitting application:', error);
+                alert('Error in submitting your application. Please try again');
+                setResponseLoading(false);
             }
         };
 
@@ -79,58 +85,66 @@ export const JobApplication = () => {
         if (submitData && Object.keys(submiterrors).length === 0) {
             submitFormData();
         } else {
+            setResponseLoading(false);
             setSubmitData(false);
         }
     }, [submiterrors]);
 
     return (
-        <div className='jobApplicationParent'>
-            <div className='container'>
-                <div className='PagePartition'>
-                    <div className='pagePartitionLeft'>
-                        <div className='Image_divParent'>
-                            <img src={CompanyLogo} alt="companyIcon" className='compIco' />
-                        </div>
-                        {jobDetails && (
-                            <>
-                                <h1>{jobDetails.jobTitle}</h1>
-                                <span>{jobDetails.province}, {jobDetails.country}</span>
-                            </>
-                        )}
-                        <a href="">Back To Job Description</a>
-                    </div>
-                    <div className='pagePartitionRight'>
-                        <h2>Candidate Details</h2>
-                        <form action="" onSubmit={handleSubmit}>
-                            <div className='oneline_input'>
-                                <div className='input_parent'>
-                                    <label>Total Years of experience:</label>
-                                    <input type='number' name='totalExp' value={userProfile.totalExp} onChange={handleChange} />
-                                    {submiterrors.totalExp && <p className="erMessage">{submiterrors.totalExp}</p>}
+        <>
+            {responseLoading ? (
+                <CustomLoadFunction />
+            ) : (
+                <div className='jobApplicationParent'>
+                    <div className='container'>
+                        <div className='PagePartition'>
+                            <div className='pagePartitionLeft'>
+                                <div className='Image_divParent'>
+                                    <img src={CompanyLogo} alt="companyIcon" className='compIco' />
                                 </div>
-                                <div className='input_parent'>
-                                    <label>Upload Resume:</label>
-                                    <input type="file" name="userResume" accept=".pdf, .doc, .docx" onChange={handleChange} />
-                                    {submiterrors.userResume && <p className="erMessage">{submiterrors.userResume}</p>}
-                                </div>
-                            </div>
-                            <div className='input_parent'>
-                                <label>Cover Letter</label>
-                                <textarea name='userCoverL' rows='5' value={userProfile.userCoverL} onChange={handleChange} />
-                                {submiterrors.userCoverL && <p className="erMessage">{submiterrors.userCoverL}</p>}
-                            </div>
+                                {jobDetails && (
+                                    <>
+                                        <h1>{jobDetails.jobTitle}</h1>
+                                        <span>{jobDetails.province}, {jobDetails.country}</span>
+                                    </>
+                                )}
+                                <a onClick={() => navigate(-1)}>Back To Job Description</a>
 
-                            <div className='useResume'>
-                                <span>If you want to create a new Resume, then use our Resume Builder by </span>
-                                <NavLink to="/resume-builder">Clicking here</NavLink>
                             </div>
-                            <div className='center_content'>
-                                <button className='submit_button'>Apply</button>
+                            <div className='pagePartitionRight'>
+                                <h2>Candidate Details</h2>
+                                <form action="" onSubmit={handleSubmit}>
+                                    <div className='oneline_input'>
+                                        <div className='input_parent'>
+                                            <label>Total Years of experience:</label>
+                                            <input type='number' name='totalExp' value={userProfile.totalExp} onChange={handleChange} />
+                                            {submiterrors.totalExp && <p className="erMessage">{submiterrors.totalExp}</p>}
+                                        </div>
+                                        <div className='input_parent'>
+                                            <label>Upload Resume:</label>
+                                            <input type="file" name="userResume" accept=".pdf, .doc, .docx" onChange={handleChange} />
+                                            {submiterrors.userResume && <p className="erMessage">{submiterrors.userResume}</p>}
+                                        </div>
+                                    </div>
+                                    <div className='input_parent'>
+                                        <label>Cover Letter</label>
+                                        <textarea name='userCoverL' rows='5' value={userProfile.userCoverL} onChange={handleChange} />
+                                        {submiterrors.userCoverL && <p className="erMessage">{submiterrors.userCoverL}</p>}
+                                    </div>
+
+                                    <div className='useResume'>
+                                        <span>If you want to create a new Resume, then use our Resume Builder by </span>
+                                        <NavLink to="/resume-builder">Clicking here</NavLink>
+                                    </div>
+                                    <div className='center_content'>
+                                        <button className='submit_button'>Apply</button>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            )}
+        </>
     )
 }

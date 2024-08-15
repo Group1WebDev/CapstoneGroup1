@@ -99,7 +99,6 @@ const Login = () => {
     navigate(`/forgotPassword`);
   };
 
-
   return (
     <div>
       <div className='LoginBg'>
@@ -137,7 +136,6 @@ const Login = () => {
               </button>
               <span onClick={gotoForgotScreen}>Forgot Password?</span>
             </div>
-
 
             <div className='noaccount'>
               <span>Don't have an account?</span>

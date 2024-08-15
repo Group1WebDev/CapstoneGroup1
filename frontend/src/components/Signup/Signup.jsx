@@ -67,7 +67,7 @@ const Signup = () => {
 
     if (validate.success) {
       try {
-        const result = await fetch('http://localhost:5001/userRegister', {
+        const result = await fetch('https://group-1-capstone.onrender.com/userRegister', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

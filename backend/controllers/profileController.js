@@ -4,7 +4,7 @@ const updateProfile = async (req, res) => {
   const { userDesignation, userSkills, locDetail, bio, gender, userEducation, userExp } = req.body;
 
   if (req.file) {
-    profilePicUrl = 'http://localhost:5001/profiles/' + req.file.filename;
+    profilePicUrl = 'https://group-1-capstone.onrender.com/profiles/' + req.file.filename;
   }
 
   try {

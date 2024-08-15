@@ -48,7 +48,7 @@ const ResumeBuilder = () => {
 
   async function createAndOpenPDF() {
     try {
-      const response = await fetch('http://localhost:5001/create-pdf', {
+      const response = await fetch('https://group-1-capstone.onrender.com/create-pdf', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const ResumeBuilder = () => {
       if (!response.ok) {
         throw new Error('err creating pdf');
       }
-      window.open('http://localhost:5001/get-resume', '_blank');
+      window.open('https://group-1-capstone.onrender.com/get-resume', '_blank');
     } catch (error) {
       console.error(error);
     }
@@ -81,7 +81,7 @@ const ResumeBuilder = () => {
 
   const geminiApi = async (data) => {
     try {
-      const response = await fetch('http://localhost:5001/gemini-res', {
+      const response = await fetch('https://group-1-capstone.onrender.com/gemini-res', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

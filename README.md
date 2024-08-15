@@ -49,3 +49,16 @@ Then run
 ```bash
   https://group-1-capstone.onrender.com/
 ```
+
+## MONGO_DB url
+
+```bash
+  mongodb+srv://codeviews:QJXkRcrCMkNHIQb2@codeviews.kcunwnx.mongodb.net/talenthub?retryWrites=true&w=majority&appName=codeviews
+```
+
+## Login credentials
+
+```bash
+  Email: Irenekwon@gmail.com
+  Password: 123456
+```

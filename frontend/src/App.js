@@ -68,7 +68,7 @@ function RouteMain() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch('http://localhost:5001/get_Userprofile/' + userInfo.id);
+        const response = await fetch('https://group-1-capstone.onrender.com/get_Userprofile/' + userInfo.id);
         if (!response.ok) {
           throw new Error(`err ${response.status}`);
         }
