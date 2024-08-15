@@ -108,8 +108,8 @@ export const JobApplication = () => {
                                         <span>{jobDetails.province}, {jobDetails.country}</span>
                                     </>
                                 )}
-                                <a href="">Back To Job Description</a>
                                 <a onClick={() => navigate(-1)}>Back To Job Description</a>
+
                             </div>
                             <div className='pagePartitionRight'>
                                 <h2>Candidate Details</h2>

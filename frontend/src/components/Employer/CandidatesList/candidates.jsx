@@ -15,6 +15,7 @@ export default function CandidatesList() {
             const response = await fetch(`http://localhost:5001/jobs-by-employer/${user.user.id}`);
             if (!response.ok) {
                 throw new Error('err to fetch job details');
+                setResponseLoading(false);
             }
             const data = await response.json();
             console.log('data', data)
@@ -42,22 +43,23 @@ export default function CandidatesList() {
     }, [])
     return (
         <>
-            {
-                responseLoading ? (
-                    <CustomLoadFunction />
-                ) : (
-                    <div>
-                        <h1>Candidates List</h1>
-                        <br /><br />
-                        <table id="candidates_tb">
-                            <tr>
-                                <th>Sr. No.</th>
-                                <th>Image</th>
-                                <th>Applicant Name</th>
-                                <th>Job Title</th>
-                                <th>Action</th>
-                            </tr>
-                            {applicants.map((applicant, index) =>
+            {responseLoading ? (
+                <CustomLoadFunction />
+            ) : (
+                <div>
+                    <h1>Candidates List</h1>
+                    <br /><br />
+                    <table id="candidates_tb">
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Image</th>
+                            <th>Applicant Name</th>
+                            <th>Job Title</th>
+                            <th>Action</th>
+                        </tr>
+                        {applicants && applicants.length > 0 ? (
+
+                            applicants.map((applicant, index) =>
                                 <tr>
                                     <td>{index + 1}</td>
                                     <td className='image_cell'><img src={applicant.user.profilePic} alt="userImage" /></td>
@@ -65,11 +67,19 @@ export default function CandidatesList() {
                                     <td>{applicant.jobTitle}</td>
                                     <td><a href="">View</a></td>
                                 </tr>
-                            )}
-                        </table>
-                    </div>
-                )
-            }
+                            )
+
+                        ) : (
+                            <tr>
+                                <td className='nodataTd' colspan={5}>
+                                    No job applicant found
+                                </td>
+                            </tr>
+                        )
+                        }
+                    </table>
+                </div>
+            )}
         </>
     )
 }

@@ -22,13 +22,13 @@ import ForgotPasswordScreen from './components/ForgotPassword/forgotPassword';
 import JobDescription from './components/JobDescription/jobDescription.jsx';
 import EmployerLayout from './EmployerLayout.jsx';
 import { AddProfileDetails } from './components/Profile/addProfileDetails.jsx';
+import UpdatePass from './components/Profile/updatePassword.jsx';
 import JobsPosted from './components/Employer/JobsPostedEmployer/jobsListEmployer.jsx';
 import { JobApplication } from './components/JobApplication/jobApplication.jsx';
 import CandidatesList from './components/Employer/CandidatesList/candidates.jsx';
 import ResumeBuilder from './components/ResumeBuilder/resumeBuilder';
 import JobViewPage from './components/Employer/JobsPostedEmployer/viewJob.jsx';
 import UpdatePreviousJob from './components/Employer/JobsPostedEmployer/updateJob.jsx';
-import UpdatePass from './components/Profile/updatePassword.jsx';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -102,6 +102,14 @@ function RouteMain() {
           element={
             <Layout>
               <Homepage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/updatePassword'
+          element={
+            <Layout>
+              <UpdatePass />
             </Layout>
           }
         />
@@ -181,14 +189,6 @@ function RouteMain() {
           }
         />
         <Route
-          path='/updatePassword'
-          element={
-            <Layout>
-              <UpdatePass />
-            </Layout>
-          }
-        />
-        <Route
           path='/jobApplication/:id'
           element={
             <Layout>
@@ -210,7 +210,7 @@ function RouteMain() {
           }
         />
         <Route
-          path="/job_detail/:jobId"
+          path='/job_detail/:jobId'
           element={
             <EmployerLayout>
               <EmployerParent>
@@ -220,7 +220,7 @@ function RouteMain() {
           }
         />
         <Route
-          path="/job_update/:jobId"
+          path='/job_update/:jobId'
           element={
             <EmployerLayout>
               <EmployerParent>

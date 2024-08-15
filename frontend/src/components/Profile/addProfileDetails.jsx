@@ -104,6 +104,7 @@ export const AddProfileDetails = () => {
       alert('Error in submitting your profile details. Please try again');
       setTimeout(() => setResponseLoading(false), 1000);
     }
+
   };
 
   const handleImageChange = (e) => {

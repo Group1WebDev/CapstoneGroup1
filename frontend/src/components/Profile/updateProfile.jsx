@@ -111,7 +111,9 @@ function ProfilePage() {
                 </div>
               </div>
               <div className=''>
-                <button className='updatePassBtn' onClick={goToUpdatePassword}>Update Password</button>
+                <button className='updatePassBtn' onClick={goToUpdatePassword}>
+                  Update Password
+                </button>
               </div>
               <div className='editBtn' onClick={handleEditIconClick}>
                 <button>

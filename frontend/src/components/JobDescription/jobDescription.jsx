@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './jobDescription.css';
+import CustomLoadFunction from '../CustomLoader/customLoader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign, faMapMarkerAlt, faBriefcase, faLanguage, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useNavigate } from 'react-router-dom';
-import CustomLoadFunction from '../CustomLoader/customLoader';
 
 function JobDescription() {
   const { id } = useParams();
@@ -53,6 +53,9 @@ function JobDescription() {
                   <div className='companyHead'>
                     {/* <img src={jobDetails.logo} alt='Company Logo' className='company_logo' /> */}
                     <h1>{jobDetails.jobTitle}</h1>
+                    <div className='jobLocation'>
+                      <FontAwesomeIcon className="iconLoc" icon={faMapMarkerAlt} />{jobDetails.addressLine}, {jobDetails.city}, {jobDetails.province}, {jobDetails.country}
+                    </div>
                   </div>
                   <button className='description_apply' onClick={handleApplyClick}>Apply Now</button>
                 </div>
@@ -124,4 +127,5 @@ function JobDescription() {
     </>
   );
 }
-export default JobDescription;
+
+export default JobDescription

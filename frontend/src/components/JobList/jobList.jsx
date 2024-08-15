@@ -196,6 +196,7 @@ export default function Jobs() {
 
 
               <div className='job_grid'>
+                {/* {jobsListing.map((job, index) => ( */}
                 {apifilteredJobs.map((job, index) => (
                   <Link to={'/jobDescription/' + job._id}>
                     <div key={index} className='job_card'>

@@ -20,6 +20,11 @@
   justify-content: center;
 }
 
+/* this class is used to center logo when path is for employer */
+.centerHead{
+    justify-content: center;
+}
+
 .mainHead .logoSide {
   font-size: 24px;
   font-weight: bold;
@@ -63,11 +68,21 @@
 }
 
 @media (max-width: 768px) {
+  .mainHead ul{
+
+  }
   .mainHead nav ul li {
     margin-right: 16px;
-    text-align: center;
   }
   .mainHead nav ul li a{
     font-size: 14px;
+  }
+  .register_button{
+
+  }
+}
+@media (max-width: 768px) {
+  .mainHead nav ul li{
+    text-align: center;
   }
 }

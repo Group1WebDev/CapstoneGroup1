@@ -28,8 +28,7 @@ const Signup = () => {
 
   const toggleSignupPassVisibile = () => {
     setSignupPassVisible(!signupPassVisible);
-  }
-
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -80,13 +79,7 @@ const Signup = () => {
         });
         if (result.ok) {
           const resultJson = await result.json();
-          console.log(resultJson);
-          if (selectedRole === 'user') {
-            navigate('/userProfile');
-          }
-          else {
-            navigate('/login');
-          }
+          navigate('/login');
         } else {
           alert('Registration failed!');
         }
@@ -129,28 +122,12 @@ const Signup = () => {
             Register as <span>User</span>
           </h2>
           <div>
-            <span className='selectBold'>
-              Select your Role:
-            </span>
+            <span className='selectBold'>Select your Role:</span>
             <div className='userRadio'>
-              <label htmlFor="employer_role">Employer</label>
-              <input
-                type='radio'
-                name='userRole'
-                id='employer_role'
-                value='employer'
-                checked={selectedRole === 'employer'}
-                onChange={handleRadioChange}
-              />
-              <label htmlFor="user_role">User</label>
-              <input
-                type="radio"
-                name='userRole'
-                id='user_role'
-                value='user'
-                checked={selectedRole === 'user'}
-                onChange={handleRadioChange}
-              />
+              <label htmlFor='employer_role'>Employer</label>
+              <input type='radio' name='userRole' id='employer_role' value='employer' checked={selectedRole === 'employer'} onChange={handleRadioChange} />
+              <label htmlFor='user_role'>User</label>
+              <input type='radio' name='userRole' id='user_role' value='user' checked={selectedRole === 'user'} onChange={handleRadioChange} />
             </div>
           </div>
 
@@ -173,18 +150,8 @@ const Signup = () => {
             <div className='input_login'>
               <label htmlFor='password'>Password:</label>
               <div className='input_eye'>
-                <input
-                  type={signupPassVisible ? "text" : "password"}
-                  id='password'
-                  name='password'
-                  value={password}
-                  onChange={handleChange}
-                />
-                <FontAwesomeIcon
-                  icon={signupPassVisible ? faEyeSlash : faEye}
-                  onClick={toggleSignupPassVisibile}
-                  className='fontIcon'
-                />
+                <input type={signupPassVisible ? 'text' : 'password'} id='password' name='password' value={password} onChange={handleChange} />
+                <FontAwesomeIcon icon={signupPassVisible ? faEyeSlash : faEye} onClick={toggleSignupPassVisibile} className='fontIcon' />
               </div>
               <div className='err_input'>{passwordError}</div>
             </div>

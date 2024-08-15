@@ -44,6 +44,7 @@
   right: 10%;
   bottom: -60px;
   position: absolute;
+  gap: 10px;
 }
 
 .search-container .input_box {

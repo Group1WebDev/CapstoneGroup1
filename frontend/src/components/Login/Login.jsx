@@ -27,7 +27,7 @@ const Login = () => {
 
   const togglePassVisibile = () => {
     setPassVisible(!passVisible);
-  }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,11 +64,16 @@ const Login = () => {
             user: resultJson.user,
           };
           setToken(userInfo);
+          console.log(userInfo);
           window.sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
           if (resultJson.user.role === 'employer') {
-            navigate('/employer/dashboard')
+            navigate('/employer/dashboard');
           } else {
-            navigate(`/jobList`);
+            if (!resultJson.user.checkFirstTimer) {
+              navigate(`/userProfile`);
+            } else {
+              navigate(`/jobList`);
+            }
           }
         } else {
           alert('Login failed!');
@@ -99,7 +104,6 @@ const Login = () => {
     navigate(`/forgotPassword`);
   };
 
-
   return (
     <div>
       <div className='LoginBg'>
@@ -114,19 +118,8 @@ const Login = () => {
             <div className='input_login'>
               <label htmlFor='password'>Password:</label>
               <div className='input_eye'>
-                <input
-                  type={passVisible ? "text" : "password"}
-                  className=''
-                  id='password'
-                  name='password'
-                  onChange={handleChange}
-                  value={password}
-                />
-                <FontAwesomeIcon
-                  icon={passVisible ? faEyeSlash : faEye}
-                  onClick={togglePassVisibile}
-                  className='fontIcon'
-                />
+                <input type={passVisible ? 'text' : 'password'} className='' id='password' name='password' onChange={handleChange} value={password} />
+                <FontAwesomeIcon icon={passVisible ? faEyeSlash : faEye} onClick={togglePassVisibile} className='fontIcon' />
               </div>
               {/* <input type='password' id='password' name='password' onChange={handleChange} value={password} /> */}
               <div className='err_input'>{passwordError}</div>
@@ -137,7 +130,6 @@ const Login = () => {
               </button>
               <span onClick={gotoForgotScreen}>Forgot Password?</span>
             </div>
-
 
             <div className='noaccount'>
               <span>Don't have an account?</span>

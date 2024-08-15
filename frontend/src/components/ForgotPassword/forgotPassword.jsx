@@ -13,10 +13,10 @@ function ForgotPasswordScreen() {
   const [otpSent, setOtpSent] = useState(false);
   const [newPass, setNewPass] = useState('');
   const [confPass, setConfPass] = useState('');
-  const [responseLoading, setResponseLoading] = useState(false);
 
   const [newPassVisible, setNewPassVisible] = useState(false);
   const [confPassVisible, setConfPassVisible] = useState(false);
+  const [responseLoading, setResponseLoading] = useState(false);
 
 
   const togglenewPassVisibile = () => {
@@ -52,6 +52,7 @@ function ForgotPasswordScreen() {
       console.error('err:', error);
       setResponseLoading(false);
     }
+
   };
 
   const handleSubmitForgotScreen = async (e) => {

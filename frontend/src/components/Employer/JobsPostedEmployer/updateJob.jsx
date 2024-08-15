@@ -11,7 +11,6 @@ function UpdatePreviousJob() {
   const [responseLoading, setResponseLoading] = useState(false);
   const navigate = useNavigate();
   const { jobId } = useParams();
-  console.log('Job id', jobId);
 
   const [jobPostErrors, setJobPostErrors] = useState({});
 

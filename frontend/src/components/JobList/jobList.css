@@ -24,8 +24,7 @@
 .search_field input,
 .search_field select {
     width: 100%;
-    padding: 10px;
-    border: none;
+    padding: 6px;
     border-radius: 5px;
     outline: none;
 }
@@ -212,7 +211,6 @@
     margin: 0;
     color: #666;
 }
-
 .filterExpandBtn{
     background: black;
     border: none;
@@ -220,6 +218,9 @@
     width: 126px;
     padding: 8px 10px;
     color: white;
+}
+.filterExpandBtn{
+    display: none;
 }
 
 
@@ -252,5 +253,8 @@
     }
     .content_area .container{
         gap: 20px;
+    }
+    .filterExpandBtn{
+        display: inline-block;
     }
 }

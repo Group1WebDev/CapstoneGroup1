@@ -55,7 +55,6 @@ function AddNewJob() {
       errors.jobDescription = 'Job Description should be more than 100 chars';
     }
 
-
     if (!formValues.jobVacancies) {
       errors.jobVacancies = 'Please select Job Vacancies';
     } else if (formValues.jobVacancies < 1) {
@@ -67,7 +66,7 @@ function AddNewJob() {
 
     setJobPostErrors(errors);
     return Object.keys(errors).length === 0;
-  }
+  };
 
   const [exactLocation, setExactLocation] = useState({
     addressLine1: '',
@@ -127,7 +126,7 @@ function AddNewJob() {
       [name]: value,
     });
   };
-  let user = JSON.parse(sessionStorage.getItem('userInfo'))
+  let user = JSON.parse(sessionStorage.getItem('userInfo'));
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (jobPostValidations()) {
@@ -141,7 +140,7 @@ function AddNewJob() {
         city: exactLocation.city,
         province: exactLocation.province,
         country: exactLocation.country,
-        posted_by: user?.user.id
+        posted_by: user?.user.id,
       };
 
       try {
@@ -164,7 +163,7 @@ function AddNewJob() {
         setResponseLoading(false);
       } catch (error) {
         console.error('err creating job posting:', error);
-        alert('Error in creating job post. Please try again')
+        alert('Error in creating job post. Please try again');
         setResponseLoading(false);
       }
     }
@@ -255,9 +254,8 @@ function AddNewJob() {
               <div className='oneline_input'>
                 <div className='input_parent'>
                   <label>Job Description</label>
-                  <textarea cols='4' rows='12' name='jobDescription' value={formValues.jobDescription}
-                   onChange={handleChange} />
-                   {jobPostErrors.jobDescription && <span className='error'>{jobPostErrors.jobDescription}</span>}
+                  <textarea cols='4' rows='12' name='jobDescription' value={formValues.jobDescription} onChange={handleChange} />
+                  {jobPostErrors.jobDescription && <span className='error'>{jobPostErrors.jobDescription}</span>}
                 </div>
               </div>
               <h2>Job Location Details</h2>
@@ -309,7 +307,7 @@ function AddNewJob() {
         </div>
       )}
     </>
-  )
+  );
 }
 
 export default AddNewJob;

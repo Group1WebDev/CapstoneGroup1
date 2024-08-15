@@ -127,8 +127,8 @@ function Homepage() {
           <div className='app-download-content'>
             <div className='app-info'>
               <h2>DOWNLOAD TALENT HUNT APP NOW!</h2>
-              <p>Fast, Simple & Delightful. All it takes is 30 seconds to Download.</p>
-              <button className='register_button'>DOWNLOAD NOW</button>
+              <p>Download Feature coming soon</p>
+              <button className='register_button' disabled>Coming Soon</button>
             </div>
             <div className='image_bg'>
               <img src={mobile} alt='App on Phone' className='phone-image' />

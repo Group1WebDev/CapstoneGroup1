@@ -100,7 +100,6 @@
     font-size: 18px;
     margin-bottom: 30px;
 }
-
 .jobApplicationParent .pagePartitionLeft a {
     width: 100%;
     color: var(--primary-color);
@@ -114,7 +113,6 @@
     width: 100%;
     height: 100%;
 }
-
 .jobApplicationParent p.erMessage {
     color: red;
     font-size: 14px;
@@ -152,7 +150,6 @@
         align-items: center;
         margin-bottom: 30px;
     }
-
     .jobApplicationParent .pagePartitionRight {
         align-items: center;
         display: flex;

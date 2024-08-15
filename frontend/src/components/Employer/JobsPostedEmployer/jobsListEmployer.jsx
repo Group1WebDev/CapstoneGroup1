@@ -18,6 +18,7 @@ export default function JobsPosted() {
       const response = await fetch(`http://localhost:5001/jobs-by-employer/${user.user.id}`);
       if (!response.ok) {
         throw new Error('err to fetch job details');
+        setResponseLoading(false);
       }
       const data = await response.json();
       console.log('data', data)
@@ -28,6 +29,7 @@ export default function JobsPosted() {
       setResponseLoading(false);
     }
   };
+  console.log(jobs,'skjskjjksa')
 
   useEffect(() => {
     fetchJobs()
@@ -84,7 +86,7 @@ export default function JobsPosted() {
                   <td>{job.jobVacancies} Vacancies</td>
                   <td>{job.jobStatus ? "Active" : "Inactive"}</td>
                   <td className='IconsDiv'>
-                  <div className='icon view' onClick={() => handleJobView(job._id)}>
+                    <div className='icon view' onClick={() => handleJobView(job._id)}>
                       View
                       {/* <FontAwesomeIcon icon={faEye} /> */}
                     </div>
@@ -101,7 +103,8 @@ export default function JobsPosted() {
               )}
             </table>
           </div>
-        )}
+        )
+      }
     </>
   )
 }
