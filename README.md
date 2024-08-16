@@ -56,9 +56,16 @@ Then run
   mongodb+srv://codeviews:QJXkRcrCMkNHIQb2@codeviews.kcunwnx.mongodb.net/talenthub?retryWrites=true&w=majority&appName=codeviews
 ```
 
-## Login credentials
+## Login credentials for employer
 
 ```bash
   Email: Irenekwon@gmail.com
+  Password: 123456
+```
+
+## Login credentials for user
+
+```bash
+  Email: Irenekwon@user.com
   Password: 123456
 ```

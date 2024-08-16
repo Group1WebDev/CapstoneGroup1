@@ -28,7 +28,7 @@ const upload = multer({ storage });
 
 // Routes
 router.get('/', (req, res) => {
-  res.status(400).json({ message: 'test' });
+  res.status(400).json({ message: 'Welcome Talenthunt' });
 });
 router.post('/userRegister', userRegister);
 router.post('/login', login);

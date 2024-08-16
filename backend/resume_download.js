@@ -11,7 +11,6 @@ module.exports = (resumeData) => {
           <style>
 
           .dateAndInfo {
-            background:red;
             width:100%;
             display: flex;
             justify-content: space-between;
